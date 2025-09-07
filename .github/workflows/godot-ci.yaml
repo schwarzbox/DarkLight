@@ -1,0 +1,67 @@
+name: CI
+
+env:
+  GODOT_VERSION: 4.2.2
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  export-web:
+    name: Web Export
+    permissions:
+      contents: write
+      pages: write
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.2.2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: HTML5 Build
+        run: |
+          mkdir -v -p build/web
+          godot --headless --verbose --export-release "HTML5" ./build/web/index.html
+      - name: 📤 Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: build/web
+            
+      - name: 📥 Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web
+          path: build/web
+
+      # https://github.com/godotengine/godot-docs/issues/7084
+      - name: Workaround for SharedArrayBuffer support on GitHub Pages
+        run: |
+          apt-get update && apt-get install -y curl
+          cd build/web
+          curl -fsSL https://github.com/gzuidhof/coi-serviceworker/raw/master/coi-serviceworker.js > coi-serviceworker.js
+          sed -i 's#\(		<script src="index.js"></script>\)#		<script src="coi-serviceworker.js"></script>\n\1#g' index.html
+
+      # Installing rsync is needed in order to deploy to GitHub Pages. Without it, the build will fail.
+      - name: Install rsync 📚
+        run: |
+          apt-get update && apt-get install -y rsync
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build/web # The folder the action should deploy.
