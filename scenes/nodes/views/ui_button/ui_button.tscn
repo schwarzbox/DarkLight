@@ -1,0 +1,30 @@
+[gd_scene load_steps=8 format=3 uid="uid://dy63hudg53cqc"]
+
+[ext_resource type="StyleBox" uid="uid://cgfraa2n3ued0" path="res://shared/button_styles/button_style_hover.tres" id="1_h84ao"]
+[ext_resource type="StyleBox" uid="uid://bx6t66nmy5bj1" path="res://shared/button_styles/button_style_normal.tres" id="1_lxfp1"]
+[ext_resource type="StyleBox" uid="uid://bqw8gkpxlij2n" path="res://shared/button_styles/button_style_hover_pressed.tres" id="2_1qhn3"]
+[ext_resource type="Script" uid="uid://dbtno04qddxej" path="res://scenes/nodes/views/ui_button/ui_button.gd" id="2_lxfp1"]
+[ext_resource type="StyleBox" uid="uid://65tkg3tqradn" path="res://shared/button_styles/button_style_pressed.tres" id="2_sw83f"]
+[ext_resource type="AudioStream" uid="uid://8f0p72qhsjwx" path="res://scenes/nodes/views/ui_button/click.wav" id="6_7dkwg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sw83f"]
+
+[node name="UIButton" type="Button"]
+offset_right = 78.0
+offset_bottom = 40.0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_sw83f")
+theme_override_styles/disabled = ExtResource("1_lxfp1")
+theme_override_styles/hover_pressed = ExtResource("2_1qhn3")
+theme_override_styles/hover = ExtResource("1_h84ao")
+theme_override_styles/pressed = ExtResource("2_sw83f")
+theme_override_styles/normal = ExtResource("1_lxfp1")
+text = "UI Button"
+script = ExtResource("2_lxfp1")
+
+[node name="ClickAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_7dkwg")
+volume_db = -2.0
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]

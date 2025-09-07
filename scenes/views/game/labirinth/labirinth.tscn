@@ -1,0 +1,272 @@
+[gd_scene load_steps=24 format=3 uid="uid://bqdg2idsev2if"]
+
+[ext_resource type="PackedScene" uid="uid://kn4un6yv7630" path="res://scenes/base/view/view.tscn" id="1_k01ea"]
+[ext_resource type="Script" uid="uid://dvx5k5folnqjc" path="res://scenes/views/game/labirinth/labirinth.gd" id="2_orhx3"]
+[ext_resource type="Shader" uid="uid://bruux00o2mvfd" path="res://shaders/noise.gdshader" id="3_621x1"]
+[ext_resource type="LabelSettings" uid="uid://d2ne7768x728e" path="res://shared/label_settings/large_label_settings.tres" id="3_lcfbe"]
+[ext_resource type="LabelSettings" uid="uid://bfmg4ke5qx0j7" path="res://shared/label_settings/medium_label_settings.tres" id="4_4xn1b"]
+[ext_resource type="PackedScene" uid="uid://dy63hudg53cqc" path="res://scenes/nodes/views/ui_button/ui_button.tscn" id="4_83xj8"]
+[ext_resource type="Script" uid="uid://ceerpqmnrwvlv" path="res://scenes/views/game/labirinth/world.gd" id="4_nf8ix"]
+[ext_resource type="AudioStream" uid="uid://bxvg2la4hbx8n" path="res://scenes/views/game/labirinth/arithmetic_logic_unit.mp3" id="5_8hcee"]
+[ext_resource type="PackedScene" uid="uid://n8i61jb1hknj" path="res://scenes/nodes/models/strike_cursor/strike_cursor.tscn" id="5_ghkli"]
+[ext_resource type="Texture2D" uid="uid://cn0rlwgevg52t" path="res://shared/icons/icon_play.png" id="5_oqdqo"]
+[ext_resource type="Texture2D" uid="uid://dlqlhcia6jc8w" path="res://shared/icons/icon_menu.png" id="6_cl31p"]
+[ext_resource type="Script" uid="uid://bcmjqd1ujljav" path="res://scenes/views/game/labirinth/flock.gd" id="7_teq8j"]
+[ext_resource type="Shader" uid="uid://c7nmlmctqlcf1" path="res://shaders/displacement.gdshader" id="10_cl31p"]
+[ext_resource type="AudioStream" uid="uid://cb0unsjnuusys" path="res://scenes/views/game/labirinth/dark_room_sound.mp3" id="10_pugvo"]
+[ext_resource type="AudioStream" uid="uid://bhhfg0gjwf4ux" path="res://scenes/views/game/labirinth/dark_room_slow.mp3" id="11_ri7mv"]
+
+[sub_resource type="Environment" id="Environment_j58db"]
+background_mode = 3
+glow_enabled = true
+glow_blend_mode = 0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5y3gc"]
+shader = ExtResource("3_621x1")
+shader_parameter/speed = 0.02
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_agm6p"]
+noise_type = 2
+seed = 4
+frequency = 0.04
+cellular_return_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vqj0m"]
+seamless = true
+noise = SubResource("FastNoiseLite_agm6p")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x8as3"]
+shader = ExtResource("10_cl31p")
+shader_parameter/global_position = Vector2(0, 0)
+shader_parameter/camera_position = Vector2(0, 0)
+shader_parameter/screen_size = Vector2(2048, 2048)
+shader_parameter/force = 0.0
+shader_parameter/radius = 0.0
+shader_parameter/thickness = 0.0
+
+[sub_resource type="Animation" id="Animation_cl31p"]
+resource_name = "Pulse"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShockWave:material:shader_parameter/radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShockWave:material:shader_parameter/force")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.08, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShockWave:material:shader_parameter/thickness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.2, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_x8as3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShockWave:material:shader_parameter/radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShockWave:material:shader_parameter/force")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShockWave:material:shader_parameter/thickness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c4anp"]
+_data = {
+&"Pulse": SubResource("Animation_cl31p"),
+&"RESET": SubResource("Animation_x8as3")
+}
+
+[node name="Labirinth" instance=ExtResource("1_k01ea")]
+script = ExtResource("2_orhx3")
+
+[node name="LevelContainer" type="CenterContainer" parent="CanvasLayer" index="0"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -32.0
+offset_right = 88.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/LevelContainer" index="0"]
+layout_mode = 2
+label_settings = ExtResource("3_lcfbe")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseContainer" type="CenterContainer" parent="CanvasLayer" index="1"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.5
+offset_top = -32.0
+offset_right = 88.5
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseContainer" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 42
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/PauseContainer/VBoxContainer" index="0"]
+layout_mode = 2
+text = "PAUSE"
+label_settings = ExtResource("4_4xn1b")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resume" parent="CanvasLayer/PauseContainer/VBoxContainer" index="1" instance=ExtResource("4_83xj8")]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = ""
+icon = ExtResource("5_oqdqo")
+icon_alignment = 1
+
+[node name="Restart" parent="CanvasLayer/PauseContainer/VBoxContainer" index="2" instance=ExtResource("4_83xj8")]
+visible = false
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "RESTART
+"
+
+[node name="Back" parent="CanvasLayer/PauseContainer/VBoxContainer" index="3" instance=ExtResource("4_83xj8")]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = ""
+icon = ExtResource("6_cl31p")
+icon_alignment = 1
+
+[node name="GameOverContainer" type="CenterContainer" parent="CanvasLayer" index="2"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/GameOverContainer" index="0"]
+layout_mode = 2
+text = "NO MORE LIGHT"
+label_settings = ExtResource("3_lcfbe")
+
+[node name="CursorLayer" type="CanvasLayer" parent="." index="1"]
+
+[node name="StrikeCursor" parent="CursorLayer" index="0" instance=ExtResource("5_ghkli")]
+
+[node name="World" parent="." index="2"]
+script = ExtResource("4_nf8ix")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World" index="0"]
+environment = SubResource("Environment_j58db")
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="World" index="1"]
+color = Color(1, 1, 0.996078, 1)
+blend_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="World" index="2"]
+material = SubResource("ShaderMaterial_5y3gc")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1024.0
+offset_top = -1024.0
+offset_right = 1024.0
+offset_bottom = 1536.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_vqj0m")
+
+[node name="ShockWave" type="ColorRect" parent="World" index="3"]
+material = SubResource("ShaderMaterial_x8as3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="World" index="4"]
+libraries = {
+&"": SubResource("AnimationLibrary_c4anp")
+}
+
+[node name="Flock" type="Node2D" parent="World" index="5"]
+script = ExtResource("7_teq8j")
+
+[node name="Models" type="Node2D" parent="World" index="6"]
+
+[node name="AudioStreamPlayer1" type="AudioStreamPlayer" parent="." index="3"]
+stream = ExtResource("5_8hcee")
+volume_db = -10.0
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." index="4"]
+stream = ExtResource("10_pugvo")
+volume_db = -8.0
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="." index="5"]
+stream = ExtResource("11_ri7mv")
+volume_db = -12.0
+
+[connection signal="pressed" from="CanvasLayer/PauseContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]

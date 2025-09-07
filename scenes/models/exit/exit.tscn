@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkx1t6ghxrcb6"]
+
+[ext_resource type="Script" uid="uid://ckmwfjm4i0led" path="res://scenes/models/exit/exit.gd" id="1_sauib"]
+[ext_resource type="Texture2D" uid="uid://0mglau3tlbek" path="res://scenes/models/exit/exit.png" id="2_cypc7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ooc88"]
+radius = 32.0
+
+[node name="Exit" type="Area2D"]
+collision_layer = 0
+monitorable = false
+script = ExtResource("1_sauib")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_cypc7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ooc88")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

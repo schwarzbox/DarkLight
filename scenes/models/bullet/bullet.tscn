@@ -1,0 +1,77 @@
+[gd_scene load_steps=8 format=3 uid="uid://ny0cfyb1yyxm"]
+
+[ext_resource type="Script" uid="uid://tdag4wle0meb" path="res://scenes/models/bullet/bullet.gd" id="1_qrskq"]
+[ext_resource type="Texture2D" uid="uid://cf60tl7h3byby" path="res://scenes/models/bullet/bullet.png" id="2_y352c"]
+[ext_resource type="PackedScene" uid="uid://cdwgfsfnysr8b" path="res://scenes/nodes/models/body/body.tscn" id="3_vd5br"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bm6a3"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vd5br"]
+radius = 64.0
+
+[sub_resource type="Gradient" id="Gradient_gfsmh"]
+offsets = PackedFloat32Array(0.517483, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_vd5br"]
+offsets = PackedFloat32Array(0.555944, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Bullet" type="AnimatableBody2D"]
+collision_layer = 4
+collision_mask = 10
+script = ExtResource("1_qrskq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bm6a3")
+
+[node name="BlastRadius" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlastRadius"]
+shape = SubResource("CircleShape2D_vd5br")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_y352c")
+
+[node name="Body" parent="." instance=ExtResource("3_vd5br")]
+
+[node name="ExplodeParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 128
+texture = ExtResource("2_y352c")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector2(1, 1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 196.0
+scale_amount_min = 0.2
+scale_amount_max = 0.6
+color_ramp = SubResource("Gradient_gfsmh")
+
+[node name="TrailParticles" type="CPUParticles2D" parent="."]
+amount = 512
+texture = ExtResource("2_y352c")
+lifetime = 0.8
+randomness = 0.2
+fixed_fps = 60
+emission_shape = 1
+emission_sphere_radius = 8.0
+direction = Vector2(-1, 0)
+spread = 15.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 128.0
+scale_amount_min = 0.4
+color_ramp = SubResource("Gradient_vd5br")
+
+[connection signal="body_entered" from="BlastRadius" to="." method="_on_blast_radius_body_entered"]
+[connection signal="body_exited" from="BlastRadius" to="." method="_on_blast_radius_body_exited"]

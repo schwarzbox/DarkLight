@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://ds53c785elheo"]
+
+[ext_resource type="Script" uid="uid://bgqmskxyhtuck" path="res://scenes/models/orb/orb.gd" id="1_8txy1"]
+[ext_resource type="Texture2D" uid="uid://d4h5klefs3c7f" path="res://scenes/models/orb/orb.png" id="2_dwlom"]
+[ext_resource type="PackedScene" uid="uid://cdwgfsfnysr8b" path="res://scenes/nodes/models/body/body.tscn" id="3_5l8ht"]
+[ext_resource type="PackedScene" uid="uid://cimvxxl6pjyt0" path="res://scenes/nodes/models/radial_light/radial_light.tscn" id="3_rq7sp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qmx11"]
+radius = 8.0
+
+[sub_resource type="Gradient" id="Gradient_irw8j"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.657767)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_goolb"]
+gradient = SubResource("Gradient_irw8j")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Orb" type="AnimatableBody2D"]
+collision_layer = 16
+collision_mask = 8
+script = ExtResource("1_8txy1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qmx11")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_dwlom")
+
+[node name="Body" parent="." instance=ExtResource("3_5l8ht")]
+
+[node name="RadialLight" parent="." instance=ExtResource("3_rq7sp")]
+
+[node name="PointLight2D" parent="RadialLight" index="0"]
+texture = SubResource("GradientTexture2D_goolb")
+
+[node name="LifetimeTimer" type="Timer" parent="."]
+
+[editable path="RadialLight"]

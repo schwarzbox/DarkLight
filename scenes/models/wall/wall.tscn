@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5pwa2brvubns"]
+
+[ext_resource type="Script" uid="uid://d0jh23aack13d" path="res://scenes/models/wall/wall.gd" id="1_tkir6"]
+[ext_resource type="Texture2D" uid="uid://cbvl7221510mo" path="res://scenes/models/wall/wall.png" id="2_d1edq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h0lsx"]
+size = Vector2(142, 142)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_rkipc"]
+polygon = PackedVector2Array(-66, -77, -41, -79, -25, -65, -8, -78, 17, -73, 24, -63, 38, -77, 62, -77, 79, -61, 79, -36, 68, -24, 80, -3, 74, 20, 68, 24, 78, 45, 68, 68, 45, 78, 23, 68, 5, 83, -21, 81, -27, 71, -51, 79, -73, 68, -80, 45, -70, 23, -83, 5, -80, -20, -71, -26, -80, -35, -81, -59)
+
+[node name="Wall" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_tkir6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_h0lsx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_d1edq")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_rkipc")
+sdf_collision = false

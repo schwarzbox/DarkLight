@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cctv8e2rhaaqw"]
+
+[ext_resource type="Script" uid="uid://btuwewgjgwnh3" path="res://scenes/nodes/models/cone_light/cone_light.gd" id="1_4uwuv"]
+[ext_resource type="Texture2D" uid="uid://ce1f5y0h6uj5" path="res://scenes/nodes/models/cone_light/cone.png" id="2_lybp0"]
+
+[node name="ConeLight" type="Node2D"]
+script = ExtResource("1_4uwuv")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+blend_mode = 2
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.501961)
+texture = ExtResource("2_lybp0")
+offset = Vector2(514, 2.08165e-12)
