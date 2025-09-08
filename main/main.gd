@@ -1,11 +1,12 @@
 extends View
-# check sounds DB
-# screenshot
+# web build itch.io
+# screenshots
+# update README like Love
+# strike without damage?
 
-# Rename github
-# show high scores in main menu? maybe high score is a separate view?
 # Release
-
+# ?
+# high scores in main menu with logo? (separate view)
 
 var _game_view: View = null
 
@@ -59,4 +60,4 @@ func _on_game_pressed() -> void:
 	_set_transition(_start, _game_view)
 
 func _on_exit_pressed() -> void:
-	get_tree().quit()
+	_set_transition(func() -> void: get_tree().quit(), self)
