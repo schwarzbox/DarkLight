@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bqdg2idsev2if"]
+[gd_scene load_steps=25 format=3 uid="uid://bqdg2idsev2if"]
 
 [ext_resource type="PackedScene" uid="uid://kn4un6yv7630" path="res://scenes/base/view/view.tscn" id="1_k01ea"]
 [ext_resource type="Script" uid="uid://dvx5k5folnqjc" path="res://scenes/views/game/labirinth/labirinth.gd" id="2_orhx3"]
@@ -8,10 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://dy63hudg53cqc" path="res://scenes/nodes/views/ui_button/ui_button.tscn" id="4_83xj8"]
 [ext_resource type="Script" uid="uid://ceerpqmnrwvlv" path="res://scenes/views/game/labirinth/world.gd" id="4_nf8ix"]
 [ext_resource type="AudioStream" uid="uid://bxvg2la4hbx8n" path="res://scenes/views/game/labirinth/arithmetic_logic_unit.mp3" id="5_8hcee"]
-[ext_resource type="PackedScene" uid="uid://n8i61jb1hknj" path="res://scenes/nodes/models/strike_cursor/strike_cursor.tscn" id="5_ghkli"]
-[ext_resource type="Texture2D" uid="uid://cn0rlwgevg52t" path="res://shared/icons/icon_play.png" id="5_oqdqo"]
-[ext_resource type="Texture2D" uid="uid://dlqlhcia6jc8w" path="res://shared/icons/icon_menu.png" id="6_cl31p"]
+[ext_resource type="PackedScene" uid="uid://n8i61jb1hknj" path="res://scenes/nodes/models/cursor/cursor.tscn" id="5_ghkli"]
+[ext_resource type="Texture2D" uid="uid://cn0rlwgevg52t" path="res://shared/icons/play_icon.png" id="5_oqdqo"]
+[ext_resource type="Texture2D" uid="uid://dlqlhcia6jc8w" path="res://shared/icons/menu_icon.png" id="6_cl31p"]
 [ext_resource type="Script" uid="uid://bcmjqd1ujljav" path="res://scenes/views/game/labirinth/flock.gd" id="7_teq8j"]
+[ext_resource type="Texture2D" uid="uid://dabmy3hyllny6" path="res://shared/icons/restart_icon.png" id="7_x8as3"]
 [ext_resource type="Shader" uid="uid://c7nmlmctqlcf1" path="res://shaders/displacement.gdshader" id="10_cl31p"]
 [ext_resource type="AudioStream" uid="uid://cb0unsjnuusys" path="res://scenes/views/game/labirinth/dark_room_sound.mp3" id="10_pugvo"]
 [ext_resource type="AudioStream" uid="uid://bhhfg0gjwf4ux" path="res://scenes/views/game/labirinth/dark_room_slow.mp3" id="11_ri7mv"]
@@ -184,11 +185,12 @@ icon = ExtResource("5_oqdqo")
 icon_alignment = 1
 
 [node name="Restart" parent="CanvasLayer/PauseContainer/VBoxContainer" index="2" instance=ExtResource("4_83xj8")]
-visible = false
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
-text = "RESTART
+text = "
 "
+icon = ExtResource("7_x8as3")
+icon_alignment = 1
 
 [node name="Back" parent="CanvasLayer/PauseContainer/VBoxContainer" index="3" instance=ExtResource("4_83xj8")]
 custom_minimum_size = Vector2(256, 0)
@@ -206,12 +208,12 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/GameOverContainer" index="0"]
 layout_mode = 2
-text = "NO MORE LIGHT"
+text = "FOREVER LIGHT"
 label_settings = ExtResource("3_lcfbe")
 
 [node name="CursorLayer" type="CanvasLayer" parent="." index="1"]
 
-[node name="StrikeCursor" parent="CursorLayer" index="0" instance=ExtResource("5_ghkli")]
+[node name="Cursor" parent="CursorLayer" index="0" instance=ExtResource("5_ghkli")]
 
 [node name="World" parent="." index="2"]
 script = ExtResource("4_nf8ix")

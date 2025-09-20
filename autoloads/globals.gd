@@ -3,7 +3,9 @@ extends Node
 func _ready() -> void:
 	prints(name, "ready")
 
-const AIM_IMAGE: Texture2D = preload("res://scenes/views/game/aim.png")
+const CURSOR_ARROW_ICON: Texture2D = preload("res://shared/icons/cursor_arrow_icon.png")
+const CURSOR_POINTING_HAND_ICON: Texture2D = preload("res://shared/icons/cursor_pointing_hand_icon.png")
+
 const SHOOT_ICON_1: Texture2D = preload("res://scenes/views/game/shoot_icon_1.png")
 const SHOOT_ICON_2: Texture2D = preload("res://scenes/views/game/shoot_icon_2.png")
 const SHOOT_ICON_3: Texture2D = preload("res://scenes/views/game/shoot_icon_3.png")
@@ -24,6 +26,7 @@ const WALL_SCENE: PackedScene = preload("res://scenes/models/wall/wall.tscn")
 const TRAP_SCENE: PackedScene = preload("res://scenes/models/trap/trap.tscn")
 
 const GAME_SCENE: PackedScene = preload("res://scenes/views/game/game.tscn")
+const SCORE_SCENE: PackedScene = preload("res://scenes/views/score/score.tscn")
 const LABIRINTH_SCENE: PackedScene = preload("res://scenes/views/game/labirinth/labirinth.tscn")
 
 const FIXED_FPS: int = 60
@@ -40,13 +43,15 @@ enum Models {
 	TRAP,
 }
 
-const PLAYER_SHOOT_DELAY: float = 0.28
+const PLAYER_SHOOT_DELAY: float = 0.24
 const PLAYER_SHIELD_DELAY: float = 0.4
 const PLAYER_WIN_DELAY: float = 0.8
-const PLAYER_DIED_DELAY: float = 4.0
+const PLAYER_DIED_DELAY: float = 4.2
 const PLAYER_SCALE_DELAY: float = 0.4
 const PLAYER_HIT_DELAY: float = 0.4
-const PLAYER_MAX_SHOOT_KICK_FORCE: float = 384.0
+const PLAYER_ALARM_BEAT_DELAY: float = 0.2
+const PLAYER_ALARM_HP: int = 120
+const PLAYER_MAX_SHOOT_KICK_FORCE: float = 256.0
 const PLAYER_MAX_HIT_KICK_FORCE: float = 36.0
 const PLAYER_SHIELD_FORCE_MULTIPLIER: float = 42.0
 const PLAYER_ORB_FORCE_MULTIPLIER: float = 8.0
@@ -54,7 +59,7 @@ const ENEMY_SCALE_DELAY: float = 0.8
 const ENEMY_CATCH_PLAYER_SQUARED_DISTANCE: float = 16384.0
 const ENEMY_SHOOT_PLAYER_SQUARED_DISTANCE: float = 131072.0
 const ENEMY_CHANCE_TO_SHOOT: float = 0.12
-const ENEMY_AVOID_LIGHT_FORCE_MULTIPLIER: float = 1.6
+const ENEMY_AVOID_LIGHT_FORCE_MULTIPLIER: float = 1.8
 const FLOCK_STEER_FORCE: float = 20.0
 const FLOCK_ALIGNMENT_FORCE: float = 40.0
 const FLOCK_COHESION_FORCE: float = 30.0
@@ -104,13 +109,14 @@ const UPGRADE_ICONS: Dictionary = {
 	}
 }
 
-const LABIRINTH_UI_DELAY: float = 1.4
+const LABIRINTH_UI_DELAY: float = 1.0
 const LABIRINTH_TILE_SIZE: Vector2 = Vector2(128, 128)
 const LABIRINTH_TRAP_PROBABILITY: float = 0.1
 const LABIRINTH_TRAP_COUNT: int = 8
 
 # level related constants
 const LEVELS_COUNT: int = 5
+const ENEMIES_PER_LEVEL: int = 24
 # world
 const LABIRINTH_DIMENSIONS: Dictionary = {
 	1: Vector2i(12, 12),
@@ -157,16 +163,9 @@ const FONTS: Dictionary = {
 }
 
 const COLORS: Dictionary = {
-	MAIN = Color("#000120"),
-	WHITE = Color("#FFFFFF"),
-	BLACK = Color("#000000"),
-	GRAY = Color("#C0CAD8"),
-	GREEN = Color("#00A1A1"),
-	YELLOW = Color("#FDDF19"),
-	ORANGE = Color("#FF7E1E"),
-	VIOLET = Color("#646592"),
-	BLUE = Color("#1991E8"),
-	RED = Color("#CE2E59")
+	DEFAULT_WHITE = Color(1.0, 1.0, 1.0, 1.0),
+	DEFAULT_BLACK = Color(0.0, 0.0, 0.0, 1.0),
+	ALARM_BEAT_WHITE = Color(1.0, 1.0, 1.0, 0.2)
 }
 
 const GLOW_COLORS: Dictionary = {

@@ -1,0 +1,393 @@
+[gd_scene load_steps=7 format=3 uid="uid://dyjjmxtr6etqw"]
+
+[ext_resource type="PackedScene" uid="uid://kn4un6yv7630" path="res://scenes/base/view/view.tscn" id="1_nno0o"]
+[ext_resource type="Script" uid="uid://nmiyapa2iing" path="res://scenes/views/score/score.gd" id="2_rgy0v"]
+[ext_resource type="LabelSettings" uid="uid://d2ne7768x728e" path="res://shared/label_settings/large_label_settings.tres" id="3_5y0xh"]
+[ext_resource type="LabelSettings" uid="uid://bfmg4ke5qx0j7" path="res://shared/label_settings/medium_label_settings.tres" id="4_3u7l3"]
+[ext_resource type="PackedScene" uid="uid://dy63hudg53cqc" path="res://scenes/nodes/views/ui_button/ui_button.tscn" id="5_8mnc0"]
+[ext_resource type="Texture2D" uid="uid://dlqlhcia6jc8w" path="res://shared/icons/menu_icon.png" id="6_551o1"]
+
+[node name="Score" instance=ExtResource("1_nno0o")]
+script = ExtResource("2_rgy0v")
+
+[node name="ScoreContainer" type="CenterContainer" parent="CanvasLayer" index="0"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ScoreContainer" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 42
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer" index="0"]
+layout_mode = 2
+text = "ECHO OF LIGHT"
+label_settings = ExtResource("3_5y0xh")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="LastScore" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer" index="1"]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("4_3u7l3")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="NameEdit" type="LineEdit" parent="CanvasLayer/ScoreContainer/VBoxContainer" index="2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+placeholder_text = "ENTER YOUR NAME"
+alignment = 1
+max_length = 16
+context_menu_enabled = false
+emoji_menu_enabled = false
+virtual_keyboard_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+drag_and_drop_selection_enabled = false
+caret_blink = true
+caret_force_displayed = true
+caret_mid_grapheme = true
+
+[node name="Columns" type="VBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer" index="3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_constants/separation = 32
+
+[node name="Title" type="HBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Number" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Title" index="0"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Name" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Title" index="1"]
+custom_minimum_size = Vector2(768, 0)
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Time" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Title" index="2"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "Time"
+label_settings = ExtResource("4_3u7l3")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Rows" type="VBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns" index="1"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row1" type="HBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Number" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row1" index="0"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "1"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Name" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row1" index="1"]
+custom_minimum_size = Vector2(768, 0)
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Time" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row1" index="2"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("4_3u7l3")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Row2" type="HBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows" index="1"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Number" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row2" index="0"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "2"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Name" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row2" index="1"]
+custom_minimum_size = Vector2(768, 0)
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Time" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row2" index="2"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("4_3u7l3")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Row3" type="HBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows" index="2"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Number" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row3" index="0"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "3"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Name" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row3" index="1"]
+custom_minimum_size = Vector2(768, 0)
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Time" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row3" index="2"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("4_3u7l3")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Row4" type="HBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows" index="3"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Number" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row4" index="0"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "4"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Name" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row4" index="1"]
+custom_minimum_size = Vector2(768, 0)
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Time" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row4" index="2"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("4_3u7l3")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Row5" type="HBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows" index="4"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Number" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row5" index="0"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "5"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Name" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row5" index="1"]
+custom_minimum_size = Vector2(768, 0)
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Time" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row5" index="2"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("4_3u7l3")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Row6" type="HBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows" index="5"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Number" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row6" index="0"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "6"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Name" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row6" index="1"]
+custom_minimum_size = Vector2(768, 0)
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Time" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row6" index="2"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("4_3u7l3")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Row7" type="HBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows" index="6"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Number" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row7" index="0"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "7"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Name" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row7" index="1"]
+custom_minimum_size = Vector2(768, 0)
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Time" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row7" index="2"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("4_3u7l3")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Row8" type="HBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows" index="7"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Number" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row8" index="0"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "8"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Name" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row8" index="1"]
+custom_minimum_size = Vector2(768, 0)
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Time" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row8" index="2"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("4_3u7l3")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Row9" type="HBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows" index="8"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Number" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row9" index="0"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "9"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Name" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row9" index="1"]
+custom_minimum_size = Vector2(768, 0)
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Time" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row9" index="2"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("4_3u7l3")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Row10" type="HBoxContainer" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows" index="9"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Number" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row10" index="0"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "10"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Name" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row10" index="1"]
+custom_minimum_size = Vector2(768, 0)
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("4_3u7l3")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Time" type="Label" parent="CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows/Row10" index="2"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("4_3u7l3")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Back" parent="CanvasLayer/ScoreContainer/VBoxContainer" index="4" instance=ExtResource("5_8mnc0")]
+layout_mode = 2
+text = ""
+icon = ExtResource("6_551o1")
+icon_alignment = 1
+
+[connection signal="text_changed" from="CanvasLayer/ScoreContainer/VBoxContainer/NameEdit" to="." method="_on_name_edit_text_changed"]
+[connection signal="text_submitted" from="CanvasLayer/ScoreContainer/VBoxContainer/NameEdit" to="." method="_on_name_edit_text_submitted"]
+[connection signal="pressed" from="CanvasLayer/ScoreContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]

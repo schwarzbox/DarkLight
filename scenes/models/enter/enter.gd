@@ -6,3 +6,5 @@ extends Node2D
 
 func start(pos: Vector2) -> void:
 	position = pos
+
+	$Sprite2D.modulate = Globals.COLORS.DEFAULT_WHITE

@@ -89,6 +89,9 @@ func start(pos: Vector2, level: int) -> void:
 func hit(damage: int) -> void:
 	$Body.hit(damage)
 
+func set_dead_audio_volume(value: int) -> void:
+	$DeadAudio.volume_db = value
+
 func is_dead() -> bool:
 	return $Body.is_destroyed()
 

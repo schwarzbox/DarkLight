@@ -5,9 +5,6 @@ var alignment_force: float = Globals.FLOCK_ALIGNMENT_FORCE
 var cohesion_force: float = Globals.FLOCK_COHESION_FORCE
 var separation_force: float = Globals.FLOCK_SEPARATION_FORCE
 
-func _ready() -> void:
-	prints(name, "ready")
-
 func _process(_delta: float) -> void:
 	var enemies: Array[Node] = get_tree().get_nodes_in_group("enemy")
 	var cohesion_vector: Vector2 = Vector2.ZERO

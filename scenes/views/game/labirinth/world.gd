@@ -2,9 +2,6 @@ extends Node
 
 var _map: Array[Array]
 
-func _ready() -> void:
-	prints(name, "ready")
-
 func add_models_child(child: Node2D) -> void:
 	$Models.add_child(child)
 

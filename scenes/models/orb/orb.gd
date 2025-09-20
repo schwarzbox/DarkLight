@@ -14,6 +14,8 @@ var _bonus: int = 10:
 func _ready() -> void:
 	sync_to_physics = false
 
+	add_to_group("orb")
+
 	$Body.connect("destroyed", _on_body_destroyed)
 	$Body.connect("self_destroyed", _on_body_self_destroyed)
 

@@ -1,12 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqo0tw73j0nmd"]
+[gd_scene load_steps=10 format=3 uid="uid://bqo0tw73j0nmd"]
 
 [ext_resource type="PackedScene" uid="uid://kn4un6yv7630" path="res://scenes/base/view/view.tscn" id="1"]
 [ext_resource type="Script" uid="uid://cij61nhds36ye" path="res://main/main.gd" id="2"]
 [ext_resource type="LabelSettings" uid="uid://d2ne7768x728e" path="res://shared/label_settings/large_label_settings.tres" id="3_eidmc"]
-[ext_resource type="Texture2D" uid="uid://c13x7f5ohurdp" path="res://main/ui.png" id="3_jqped"]
+[ext_resource type="Texture2D" uid="uid://c13x7f5ohurdp" path="res://main/main.png" id="3_jqped"]
 [ext_resource type="PackedScene" uid="uid://dy63hudg53cqc" path="res://scenes/nodes/views/ui_button/ui_button.tscn" id="5_3wy1v"]
-[ext_resource type="Texture2D" uid="uid://cn0rlwgevg52t" path="res://shared/icons/icon_play.png" id="6_4dugh"]
-[ext_resource type="Texture2D" uid="uid://u41visqlffig" path="res://shared/icons/icon_exit.png" id="7_67ri8"]
+[ext_resource type="Texture2D" uid="uid://cn0rlwgevg52t" path="res://shared/icons/play_icon.png" id="6_4dugh"]
+[ext_resource type="Texture2D" uid="uid://u41visqlffig" path="res://shared/icons/exit_icon.png" id="7_67ri8"]
+[ext_resource type="Texture2D" uid="uid://uwxpuyuaiodh" path="res://shared/icons/score_icon.png" id="7_grrlh"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ycap5"]
 
@@ -56,7 +57,14 @@ text = ""
 icon = ExtResource("6_4dugh")
 icon_alignment = 1
 
-[node name="Exit" parent="CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer" index="1" instance=ExtResource("5_3wy1v")]
+[node name="Score" parent="CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer" index="1" instance=ExtResource("5_3wy1v")]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = ""
+icon = ExtResource("7_grrlh")
+icon_alignment = 1
+
+[node name="Exit" parent="CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer" index="2" instance=ExtResource("5_3wy1v")]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 text = ""
@@ -64,4 +72,5 @@ icon = ExtResource("7_67ri8")
 icon_alignment = 1
 
 [connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer/Game" to="." method="_on_game_pressed"]
+[connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer/Score" to="." method="_on_score_pressed"]
 [connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

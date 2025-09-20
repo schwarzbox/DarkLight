@@ -18,6 +18,8 @@ var _damage: int = 1
 func _ready() -> void:
 	sync_to_physics = false
 
+	add_to_group("bullet")
+
 	$Body.connect("destroyed", _on_body_destroyed)
 	$Body.connect("self_destroyed", _on_body_self_destroyed)
 
@@ -85,7 +87,9 @@ func _process(delta: float) -> void:
 								enemy.get_linear_velocity() + dir * _linear_velocity.length()
 							)
 							get_tree().create_timer(Globals.BULLET_BLAST_DELAY).timeout.connect(
-								func() -> void: enemy.hit(_damage)
+								func() -> void:
+									enemy.set_dead_audio_volume(-_blast_targets.size())
+									enemy.hit(_damage)
 							)
 		elif is_instance_of(collider, Wall):
 			if velocity_length_squared < Globals.BULLET_STRIKE_FORCE_SQUARED:

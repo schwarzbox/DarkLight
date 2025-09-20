@@ -9,6 +9,7 @@ signal bullet_blasted
 signal died
 signal won
 
+signal cursor_hided
 signal strike_initiated
 signal strike_updated
 signal strike_finished
@@ -17,7 +18,7 @@ signal strike_finished
 
 var sprite_size: Vector2
 
-var _force: float = 256.0
+var _force: float = 296.0
 var _linear_velocity: Vector2 = Vector2.ZERO:
 	set = set_linear_velocity
 var _dump: bool = false:
@@ -53,11 +54,14 @@ var _is_shield: bool = false
 var _shield_target: Enemy = null
 
 var _shape_tween: Tween
-var _heart_beat_tween: Tween
+var _cell_beat_tween: Tween
+var _alarm_beat_tween: Tween
 var _strike_tween: Tween
 var _win_tween: Tween
 
 var _damage: int = 1
+var _shoot_damage: int = 1
+var _strike_damage: int = 10
 
 func _ready() -> void:
 	prints(name, "ready")
@@ -143,11 +147,12 @@ func _process(delta: float) -> void:
 func start(pos: Vector2, shape_cast_max_results: int) -> void:
 	position = pos
 	$ShapeCast2D.max_results = shape_cast_max_results
-	_update_shape()
-
 	# reset player
-	strike_finished.emit()
-	modulate = Color.WHITE
+	_update_shape()
+	# restore player alpha
+	modulate = Globals.COLORS.DEFAULT_WHITE
+	# restore radial light
+	$RadialLight.set_light_color(Globals.COLORS.DEFAULT_WHITE)
 	set_win(false)
 
 func hit(damage: int = 1) -> void:
@@ -215,13 +220,13 @@ func set_shield_count(value: int) -> void:
 
 func win(body: Exit) -> void:
 	set_win(true)
+	# hide cursor
+	cursor_hided.emit()
 
 	if !$WinAudio.is_playing():
 		$WinAudio.play()
 
-	if _win_tween:
-		_win_tween.kill()
-
+	_kill_tween(_win_tween)
 	_win_tween = create_tween()
 	_win_tween.tween_property(self, "modulate:a", 0.0, Globals.PLAYER_WIN_DELAY)
 	_win_tween.parallel().tween_property(self, "_linear_velocity", Vector2.ZERO, Globals.PLAYER_WIN_DELAY / 2)
@@ -233,12 +238,14 @@ func _shoot() -> void:
 		if !_strike_force:
 			strike_initiated.emit()
 
-		_is_strike = true
 		_strike_force += _strike_force_step
 		_strike_force = clamp(_strike_force, 0, _max_strike_force)
 		if _strike_force < _max_strike_force:
 			if !$StrikeAudio.is_playing():
 				$StrikeAudio.play()
+		else:
+			_is_strike = true
+
 	if (
 		Input.is_action_pressed("ui_left_mouse")
 		|| Input.is_action_just_released("ui_right_mouse")
@@ -253,7 +260,7 @@ func _shoot() -> void:
 				bullet.connect("died", _on_bullet_died)
 				bullet_added.emit(bullet)
 				# self hit to produce bullet
-				hit(_damage)
+				hit(_strike_damage)
 
 			else:
 				for i: int in _shoot_count:
@@ -268,7 +275,7 @@ func _shoot() -> void:
 					bullet.connect("died", _on_bullet_died)
 					bullet_added.emit(bullet)
 					# self hit to produce bullet
-					hit(_damage)
+					hit(_shoot_damage)
 
 			$ShootAudio.play()
 			$ShootTimer.start()
@@ -287,8 +294,7 @@ func _shoot() -> void:
 		_is_strike = false
 
 		if _strike_force:
-			if _strike_tween:
-				_strike_tween.kill()
+			_kill_tween(_strike_tween)
 			_strike_tween = create_tween()
 			var ratio: float = float(_strike_force) / float(_max_strike_force)
 			_strike_tween.tween_property(self, "_strike_force", 0, ratio / 4)
@@ -318,10 +324,8 @@ func _collect() -> void:
 		orb.apply_force(global_position, Globals.PLAYER_ORB_FORCE_MULTIPLIER)
 
 func _update_shape() -> void:
-	if _shape_tween:
-		_shape_tween.kill()
-
 	var diff: float = $Body.hp_ratio()
+	_kill_tween(_shape_tween)
 	_shape_tween = create_tween()
 	_shape_tween.tween_property(
 		$Sprite2D, "scale", Vector2(diff, diff), Globals.PLAYER_SCALE_DELAY
@@ -334,53 +338,81 @@ func _update_shape() -> void:
 	)
 
 	if $Body.is_damaged():
-		_heart_beat()
+		_cell_beat()
+		if get_hp() <= Globals.PLAYER_ALARM_HP:
+			_alarm_beat()
+		else:
+			_kill_tween(_alarm_beat_tween)
+			# restore radial light
+			$RadialLight.set_light_color(Globals.COLORS.DEFAULT_WHITE)
 	else:
-		if _heart_beat_tween:
-			_heart_beat_tween.kill()
+		_kill_tween(_cell_beat_tween)
+		_kill_tween(_alarm_beat_tween)
+		# restore radial light
+		$RadialLight.set_light_color(Globals.COLORS.DEFAULT_WHITE)
 
-func _heart_beat() -> void:
-	if _heart_beat_tween:
-		_heart_beat_tween.kill()
-
+func _cell_beat() -> void:
 	var diff: float = $Body.hp_ratio()
-	_heart_beat_tween = create_tween().set_loops()
-	_heart_beat_tween.tween_property(
+	_kill_tween(_cell_beat_tween)
+	_cell_beat_tween = create_tween().set_loops()
+	_cell_beat_tween.tween_property(
 		$Sprite2D, "scale", Vector2(diff - 0.2, diff - 0.2), Globals.PLAYER_SCALE_DELAY
 	)
-	_heart_beat_tween.parallel().tween_property(
+	_cell_beat_tween.parallel().tween_property(
 		$CollisionShape2D, "scale", Vector2(diff - 0.2, diff - 0.2), Globals.PLAYER_SCALE_DELAY
 	)
-	_heart_beat_tween.parallel().tween_property(
+	_cell_beat_tween.parallel().tween_property(
 		$HitRange/CollisionShape2D, "scale", Vector2(diff - 0.2, diff - 0.2), Globals.PLAYER_SCALE_DELAY
 	)
-	_heart_beat_tween.tween_interval(0.1)
-	_heart_beat_tween.tween_property(
+	_cell_beat_tween.tween_interval(0.1)
+	_cell_beat_tween.tween_property(
 		$Sprite2D, "scale", Vector2(diff, diff), Globals.PLAYER_SCALE_DELAY
 	)
-	_heart_beat_tween.parallel().tween_property(
+	_cell_beat_tween.parallel().tween_property(
 		$CollisionShape2D, "scale", Vector2(diff, diff), Globals.PLAYER_SCALE_DELAY
 	)
-	_heart_beat_tween.parallel().tween_property(
+	_cell_beat_tween.parallel().tween_property(
 		$HitRange/CollisionShape2D, "scale", Vector2(diff, diff), Globals.PLAYER_SCALE_DELAY
 	)
 
+func _alarm_beat() -> void:
+	if _alarm_beat_tween:
+		return
+	else:
+		_alarm_beat_tween = create_tween().set_loops()
+		_alarm_beat_tween.tween_callback(_on_alarm_beat_countdown).set_delay(
+			Globals.PLAYER_ALARM_BEAT_DELAY
+		)
+
+func _on_alarm_beat_countdown() -> void:
+	if $RadialLight.get_light_color() == Globals.COLORS.DEFAULT_WHITE:
+		$RadialLight.set_light_color(Globals.COLORS.ALARM_BEAT_WHITE)
+	else:
+		$RadialLight.set_light_color(Globals.COLORS.DEFAULT_WHITE)
+
+func _kill_tween(tween: Tween) -> void:
+	if tween:
+		tween.kill()
+
 func _on_body_destroyed() -> void:
-	# kill tweens
-	if _shape_tween:
-		_shape_tween.kill()
-	if _heart_beat_tween:
-		_heart_beat_tween.kill()
-	if _strike_tween:
-		_strike_tween.kill()
-	if _win_tween:
-		_win_tween.kill()
-	# hide strike cursor
-	strike_finished.emit()
-	# hide default cursor
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	# hide cursor
+	cursor_hided.emit()
 	# hide light
 	$ConeLight.hide()
+	# kill tweens
+	for tween: Tween in [
+		_shape_tween,
+		_cell_beat_tween,
+		_alarm_beat_tween,
+		_strike_tween,
+		_win_tween
+	]:
+		_kill_tween(tween)
+	# restore radial light
+	$RadialLight.set_light_color(Globals.COLORS.DEFAULT_WHITE)
+
+	# remove orbs
+	get_tree().call_group("orb", "self_destroy")
 
 	var tween: Tween = create_tween()
 	$DeadAudio.play()
@@ -391,6 +423,7 @@ func _on_body_destroyed() -> void:
 	tween.parallel().tween_property($HitRange/CollisionShape2D, "scale", Vector2.ZERO, Globals.PLAYER_SCALE_DELAY / 2)
 	tween.tween_callback(
 		func() -> void:
+			get_tree().call_group("orb", "queue_free")
 			died.emit()
 			queue_free()
 	)

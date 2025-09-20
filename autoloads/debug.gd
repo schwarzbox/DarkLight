@@ -1,5 +1,8 @@
 extends Node
 
+func _ready() -> void:
+	prints(name, "ready")
+
 func set_window_extended_info(node: Node) -> void:
 	var title: String = ProjectSettings.get_setting("application/config/name")
 
@@ -13,3 +16,8 @@ func set_window_extended_info(node: Node) -> void:
 			}
 		)
 	)
+
+func remove_window_debug_tag() -> void:
+	await RenderingServer.frame_post_draw
+	var title: String = ProjectSettings.get_setting("application/config/name")
+	DisplayServer.window_set_title(title, get_window().get_window_id())
