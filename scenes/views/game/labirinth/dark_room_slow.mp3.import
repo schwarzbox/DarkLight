@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/dark_room_slow.mp3-30b11e4bccb522c3df218e6304
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

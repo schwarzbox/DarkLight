@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bqo0tw73j0nmd"]
+[gd_scene load_steps=11 format=3 uid="uid://bqo0tw73j0nmd"]
 
 [ext_resource type="PackedScene" uid="uid://kn4un6yv7630" path="res://scenes/base/view/view.tscn" id="1"]
 [ext_resource type="Script" uid="uid://cij61nhds36ye" path="res://main/main.gd" id="2"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cn0rlwgevg52t" path="res://shared/icons/play_icon.png" id="6_4dugh"]
 [ext_resource type="Texture2D" uid="uid://u41visqlffig" path="res://shared/icons/exit_icon.png" id="7_67ri8"]
 [ext_resource type="Texture2D" uid="uid://uwxpuyuaiodh" path="res://shared/icons/score_icon.png" id="7_grrlh"]
+[ext_resource type="AudioStream" uid="uid://cljhpbjsdklpi" path="res://main/dark_light_intro_slow_silence.mp3" id="9_grrlh"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ycap5"]
 
@@ -70,6 +71,10 @@ layout_mode = 2
 text = ""
 icon = ExtResource("7_67ri8")
 icon_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="2"]
+stream = ExtResource("9_grrlh")
+volume_db = -10.0
 
 [connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer/Game" to="." method="_on_game_pressed"]
 [connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer/Score" to="." method="_on_score_pressed"]

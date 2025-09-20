@@ -107,11 +107,10 @@ func _show_level() -> void:
 
 	$CanvasLayer/LevelContainer/Label.text = str(_level)
 
-	if _level_tween:
-		_level_tween.kill()
+	_kill_tween(_level_tween)
 	_level_tween = create_tween()
-	_level_tween.tween_property($CanvasLayer/LevelContainer, "modulate:a", 1.0, Globals.LABIRINTH_UI_DELAY)
-	_level_tween.tween_property($CanvasLayer/LevelContainer, "modulate:a", 0.0, Globals.LABIRINTH_UI_DELAY)
+	_level_tween.tween_property($CanvasLayer/LevelContainer, "modulate:a", 1.0, Globals.UI_DELAY)
+	_level_tween.tween_property($CanvasLayer/LevelContainer, "modulate:a", 0.0, Globals.UI_DELAY)
 	_level_tween.tween_callback(
 		func() -> void:
 			$CanvasLayer/LevelContainer.hide()
@@ -120,14 +119,13 @@ func _show_level() -> void:
 func _show_pause() -> void:
 	$CursorLayer/Cursor.show_mouse_cursor()
 
-	_audio_stream_player.stop()
+	_audio_stream_player.stream_paused = true
 
 	_show_ui_container("pause", 0.0)
 
-	if _pause_tween:
-		_pause_tween.kill()
+	_kill_tween(_pause_tween)
 	_pause_tween = create_tween()
-	_pause_tween.tween_property($CanvasLayer/PauseContainer, "modulate:a", 1.0, Globals.LABIRINTH_UI_DELAY)
+	_pause_tween.tween_property($CanvasLayer/PauseContainer, "modulate:a", 1.0, Globals.UI_DELAY)
 
 	# stop game time
 	Globals.SCORES.save_game_time()
@@ -135,12 +133,11 @@ func _show_pause() -> void:
 func _hide_pause() -> void:
 	$CursorLayer/Cursor.hide_mouse_cursor()
 
-	_audio_stream_player.play()
+	_audio_stream_player.stream_paused = false
 
-	if _pause_tween:
-		_pause_tween.kill()
+	_kill_tween(_pause_tween)
 	_pause_tween = create_tween()
-	_pause_tween.tween_property($CanvasLayer/PauseContainer, "modulate:a", 0.0, Globals.LABIRINTH_UI_DELAY)
+	_pause_tween.tween_property($CanvasLayer/PauseContainer, "modulate:a", 0.0, Globals.UI_DELAY)
 	_pause_tween.tween_callback(
 		func() -> void:
 			$CanvasLayer/PauseContainer.hide()
@@ -153,11 +150,15 @@ func _show_game_over(text: String, callable: Callable) -> void:
 	$CanvasLayer/GameOverContainer/Label.text = text
 	_show_ui_container("game_over", 0.0)
 
-	if _game_over_tween:
-		_game_over_tween.kill()
+	_kill_tween(_game_over_tween)
 	_game_over_tween = create_tween()
-	_game_over_tween.tween_property($CanvasLayer/GameOverContainer, "modulate:a", 1.0, Globals.LABIRINTH_UI_DELAY)
-	_game_over_tween.parallel().tween_property(_audio_stream_player, "volume_db", -20, Globals.LABIRINTH_UI_DELAY)
+	_game_over_tween.tween_property($CanvasLayer/GameOverContainer, "modulate:a", 1.0, Globals.UI_DELAY)
+	_game_over_tween.parallel().tween_property(
+		_audio_stream_player,
+		"volume_db",
+		_audio_stream_player.volume_db - 10,
+		Globals.UI_DELAY
+	)
 	_game_over_tween.tween_callback(func() -> void: _set_transition(callable, self))
 
 func _reset_view(callable: Callable) -> void:
@@ -176,6 +177,10 @@ func _change(view: View) -> void:
 func _exit(view: View) -> void:
 	$CursorLayer/Cursor.show_mouse_cursor()
 	view_exited.emit(view)
+
+func _kill_tween(tween: Tween) -> void:
+	if tween:
+		tween.kill()
 
 func _on_player_cursor_hided() -> void:
 	$CursorLayer/Cursor.hide_all()

@@ -3,6 +3,8 @@ extends Node
 func _ready() -> void:
 	prints(name, "ready")
 
+const UI_DELAY: float = 1.0
+
 const CURSOR_ARROW_ICON: Texture2D = preload("res://shared/icons/cursor_arrow_icon.png")
 const CURSOR_POINTING_HAND_ICON: Texture2D = preload("res://shared/icons/cursor_pointing_hand_icon.png")
 
@@ -109,7 +111,6 @@ const UPGRADE_ICONS: Dictionary = {
 	}
 }
 
-const LABIRINTH_UI_DELAY: float = 1.0
 const LABIRINTH_TILE_SIZE: Vector2 = Vector2(128, 128)
 const LABIRINTH_TRAP_PROBABILITY: float = 0.1
 const LABIRINTH_TRAP_COUNT: int = 8

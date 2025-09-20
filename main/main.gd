@@ -1,30 +1,24 @@
 extends View
-# custom main icon
-# size of exe?
 
-# check itch.io req
-
-# screenshots itch.io
-# web build itch.io
-
-# Start fullscreen?
-# Remove Debug?
-
-# Release
-# remove godot splash
-# remove godot icon from build
+# check 1 cell win
+# check MacOS about info
 
 var _game_view: View = null
 var _score_view: View = null
 
+var _audio_tween: Tween
+
 func _ready() -> void:
 	prints(name, "ready")
 
-	Debug.remove_window_debug_tag()
-
-	# remove score for web
 	if OS.has_feature("web"):
+		# remove score for web
 		$CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer/Score.hide()
+
+	# play intro
+	$AudioStreamPlayer.volume_db = $AudioStreamPlayer.volume_db - 10
+	$AudioStreamPlayer.play()
+	_on_main_audio_resumed()
 
 	# Set world color
 	RenderingServer.set_default_clear_color(Globals.COLORS.DEFAULT_BLACK)
@@ -53,8 +47,10 @@ func _center_window_on_screen() -> void:
 
 func _setup() -> void:
 	_game_view = Globals.GAME_SCENE.instantiate()
-	_game_view.connect("view_changed", self._on_view_changed)
-	_game_view.connect("view_exited", self._on_view_exited)
+	_game_view.connect("view_changed", _on_view_changed)
+	_game_view.connect("view_exited", _on_view_exited)
+	_game_view.connect("main_audio_paused", _on_main_audio_paused)
+	_game_view.connect("main_audio_resumed", _on_main_audio_resumed)
 
 	_score_view = Globals.SCORE_SCENE.instantiate()
 	_score_view.connect("view_exited", self._on_view_exited)
@@ -78,6 +74,30 @@ func _on_view_changed(view: View) -> void:
 func _on_view_exited(view: View) -> void:
 	view.queue_free()
 	_set_transition(_setup)
+
+func _on_main_audio_paused() -> void:
+	if _audio_tween:
+		_audio_tween.kill()
+	_audio_tween = create_tween()
+	_audio_tween.tween_property(
+		$AudioStreamPlayer,
+		"volume_db",
+		$AudioStreamPlayer.volume_db - 10,
+		Globals.UI_DELAY
+	)
+	_audio_tween.tween_callback(func() -> void: $AudioStreamPlayer.stream_paused = true)
+
+func _on_main_audio_resumed() -> void:
+	$AudioStreamPlayer.stream_paused = false
+	if _audio_tween:
+		_audio_tween.kill()
+	_audio_tween = create_tween()
+	_audio_tween.tween_property(
+		$AudioStreamPlayer,
+		"volume_db",
+		$AudioStreamPlayer.volume_db + 10,
+		Globals.UI_DELAY
+	)
 
 func _on_game_pressed() -> void:
 	_set_transition(_start, _game_view)

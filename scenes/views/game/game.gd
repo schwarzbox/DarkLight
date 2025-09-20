@@ -1,5 +1,8 @@
 extends View
 
+signal main_audio_paused
+signal main_audio_resumed
+
 var player: Player = null
 var labirinth: View = null
 var level: int = 0
@@ -31,10 +34,12 @@ func _setup() -> void:
 
 
 func _start(view: Node) -> void:
+	main_audio_paused.emit()
+
 	level += 1
-	view.connect("view_restarted", self._on_view_restarted)
-	view.connect("view_changed", self._on_view_changed)
-	view.connect("view_exited", self._on_view_exited)
+	view.connect("view_restarted", _on_view_restarted)
+	view.connect("view_changed", _on_view_changed)
+	view.connect("view_exited", _on_view_exited)
 	add_world_child(view)
 
 	# update upgrade radio buttons
@@ -67,6 +72,8 @@ func _restart(view: Node) -> void:
 	view.restart(player)
 
 func _change(view: Node) -> void:
+	main_audio_resumed.emit()
+
 	if level >= Globals.LEVELS_COUNT:
 		# show score view
 		view_changed.emit(view)
@@ -79,7 +86,7 @@ func _change(view: Node) -> void:
 		# initialize new labirinth
 		labirinth = Globals.LABIRINTH_SCENE.instantiate()
 
-		# upgrades screen
+		# show upgrades screen
 		$CanvasLayer.show()
 		$CanvasLayer/UpgradeContainer/VBoxContainer/Play.disabled = true
 
@@ -93,6 +100,8 @@ func _on_view_changed(view: Node) -> void:
 	_set_transition(_change, view)
 
 func _on_view_exited(_view: Node) -> void:
+	main_audio_resumed.emit()
+
 	Globals.SCORES.reset_game_time()
 	# transit to main
 	view_exited.emit(self)
