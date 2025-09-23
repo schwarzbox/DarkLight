@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://ny0cfyb1yyxm"]
+[gd_scene load_steps=11 format=3 uid="uid://ny0cfyb1yyxm"]
 
 [ext_resource type="Script" uid="uid://tdag4wle0meb" path="res://scenes/models/bullet/bullet.gd" id="1_qrskq"]
 [ext_resource type="Texture2D" uid="uid://cf60tl7h3byby" path="res://scenes/models/bullet/bullet.png" id="2_y352c"]
 [ext_resource type="PackedScene" uid="uid://cdwgfsfnysr8b" path="res://scenes/nodes/models/body/body.tscn" id="3_vd5br"]
+[ext_resource type="PackedScene" uid="uid://cimvxxl6pjyt0" path="res://scenes/nodes/models/radial_light/radial_light.tscn" id="4_bjlov"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bm6a3"]
 radius = 8.0
@@ -10,12 +11,24 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_vd5br"]
 radius = 64.0
 
+[sub_resource type="Gradient" id="Gradient_bjlov"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.657767)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_clsqe"]
+gradient = SubResource("Gradient_bjlov")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="Gradient" id="Gradient_gfsmh"]
 offsets = PackedFloat32Array(0.517483, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="Gradient" id="Gradient_vd5br"]
-offsets = PackedFloat32Array(0.555944, 1)
+offsets = PackedFloat32Array(0.50872093, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="Bullet" type="AnimatableBody2D"]
@@ -39,6 +52,12 @@ texture = ExtResource("2_y352c")
 
 [node name="Body" parent="." instance=ExtResource("3_vd5br")]
 
+[node name="RadialLight" parent="." instance=ExtResource("4_bjlov")]
+visible = false
+
+[node name="PointLight2D" parent="RadialLight" index="0"]
+texture = SubResource("GradientTexture2D_clsqe")
+
 [node name="ExplodeParticles" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 128
@@ -61,17 +80,22 @@ color_ramp = SubResource("Gradient_gfsmh")
 [node name="TrailParticles" type="CPUParticles2D" parent="."]
 amount = 512
 texture = ExtResource("2_y352c")
-lifetime = 0.8
-randomness = 0.2
+lifetime = 0.4
+randomness = 0.4
 fixed_fps = 60
 emission_shape = 1
-emission_sphere_radius = 8.0
+emission_sphere_radius = 4.0
 direction = Vector2(-1, 0)
-spread = 15.0
+spread = 64.0
 gravity = Vector2(0, 0)
+initial_velocity_min = 32.0
 initial_velocity_max = 128.0
+tangential_accel_min = -50.0
+tangential_accel_max = 50.0
 scale_amount_min = 0.4
 color_ramp = SubResource("Gradient_vd5br")
 
 [connection signal="body_entered" from="BlastRadius" to="." method="_on_blast_radius_body_entered"]
 [connection signal="body_exited" from="BlastRadius" to="." method="_on_blast_radius_body_exited"]
+
+[editable path="RadialLight"]

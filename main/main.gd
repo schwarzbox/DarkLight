@@ -1,7 +1,12 @@
 extends View
 
-# check 1 cell win
-# check MacOS about info
+# make about similar to native when clicked
+# remove LICENSE from ABOUT
+# update git README make it similar to itch.io
+# release
+
+# windows version
+# dev log balance (light bullet, exit, hide from light, flock)
 
 var _game_view: View = null
 var _score_view: View = null
@@ -34,6 +39,17 @@ func _ready() -> void:
 	_center_window_on_screen()
 
 	_setup()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_ABOUT:
+		_about.call_deferred()
+
+func _about() -> void:
+	var about_scene: Window = preload("res://scenes/nodes/views/about/about.tscn").instantiate()
+	add_child(about_scene)
+	about_scene.connect("close_requested", about_scene.queue_free)
+	about_scene.move_to_center()
+	about_scene.show()
 
 func _center_window_on_screen() -> void:
 	var window: Window = get_window()

@@ -39,7 +39,7 @@ func start(level: int, player: Player) -> void:
 	_level = level
 	_init_view()
 
-	var enemy_count: int = _level * Globals.ENEMIES_PER_LEVEL
+	var enemy_count: int = _level * Globals.ENEMY_COUNT
 	$World.set_models(_level, enemy_count)
 
 	player.connect("cursor_hided", _on_player_cursor_hided)
@@ -66,7 +66,7 @@ func restart(player: Player) -> void:
 	get_tree().call_group("enemy", "queue_free")
 
 	# create enemies
-	var enemy_count: int = _level * Globals.ENEMIES_PER_LEVEL
+	var enemy_count: int = _level * Globals.ENEMY_COUNT
 	$World.create_enemies(_level, enemy_count)
 
 	# load state
@@ -212,7 +212,7 @@ func _on_player_won() -> void:
 	Globals.SCORES.save_game_time()
 
 	var final_text: String = ""
-	if _level >= Globals.LEVELS_COUNT:
+	if _level >= Globals.LEVEL_COUNT:
 		final_text = "FOREVER LIGHT"
 
 	_show_game_over(final_text, _change)

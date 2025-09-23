@@ -1,10 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkx1t6ghxrcb6"]
+[gd_scene load_steps=7 format=3 uid="uid://dkx1t6ghxrcb6"]
 
 [ext_resource type="Script" uid="uid://ckmwfjm4i0led" path="res://scenes/models/exit/exit.gd" id="1_sauib"]
 [ext_resource type="Texture2D" uid="uid://0mglau3tlbek" path="res://scenes/models/exit/exit.png" id="2_cypc7"]
+[ext_resource type="PackedScene" uid="uid://cimvxxl6pjyt0" path="res://scenes/nodes/models/radial_light/radial_light.tscn" id="3_wioj3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ooc88"]
 radius = 32.0
+
+[sub_resource type="Gradient" id="Gradient_irw8j"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.657767)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_275hm"]
+gradient = SubResource("Gradient_irw8j")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [node name="Exit" type="Area2D"]
 collision_layer = 0
@@ -17,4 +30,12 @@ texture = ExtResource("2_cypc7")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ooc88")
 
+[node name="RadialLight" parent="." instance=ExtResource("3_wioj3")]
+visible = false
+
+[node name="PointLight2D" parent="RadialLight" index="0"]
+texture = SubResource("GradientTexture2D_275hm")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+
+[editable path="RadialLight"]

@@ -8,13 +8,15 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_qmx11"]
 radius = 8.0
 
-[sub_resource type="Gradient" id="Gradient_irw8j"]
+[sub_resource type="Gradient" id="Gradient_5l8ht"]
 interpolation_mode = 2
 offsets = PackedFloat32Array(0, 0.657767)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_goolb"]
-gradient = SubResource("Gradient_irw8j")
+gradient = SubResource("Gradient_5l8ht")
+width = 128
+height = 128
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 

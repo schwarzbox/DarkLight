@@ -61,14 +61,14 @@ const ENEMY_SCALE_DELAY: float = 0.8
 const ENEMY_CATCH_PLAYER_SQUARED_DISTANCE: float = 16384.0
 const ENEMY_SHOOT_PLAYER_SQUARED_DISTANCE: float = 131072.0
 const ENEMY_CHANCE_TO_SHOOT: float = 0.12
-const ENEMY_AVOID_LIGHT_FORCE_MULTIPLIER: float = 1.8
+const ENEMY_AVOID_LIGHT_FORCE_MULTIPLIER: float = 2.2
 const FLOCK_STEER_FORCE: float = 20.0
 const FLOCK_ALIGNMENT_FORCE: float = 40.0
 const FLOCK_COHESION_FORCE: float = 30.0
 const FLOCK_SEPARATION_FORCE: float = 45.0
 const BULLET_SCALE_DELAY: float = 0.4
 const BULLET_BLAST_DELAY: float = 0.1
-const BULLET_BLAST_RADIUS: float = 64.0
+const BULLET_BLAST_RADIUS: float = 68.0
 const BULLET_MIN_FORCE_SQUARED: float = 393216.0
 const BULLET_STRIKE_FORCE_SQUARED: float = 1280000.0
 const BULLET_DISPERSION: float = 0.12
@@ -79,7 +79,7 @@ const BULLET_DISPERSIONS: Dictionary = {
 }
 const ORB_SCALE_DELAY: float = 0.4
 const ORB_DIED_DELAY: float = 10.0
-const ORB_CHANCE_TO_CREATE: float = 0.22
+const ORB_CHANCE_TO_CREATE: float = 0.2
 
 const SHOOT_COUNT_DIFF: int = 1
 const MIN_SHOOT_COUNT: int = 1
@@ -111,14 +111,16 @@ const UPGRADE_ICONS: Dictionary = {
 	}
 }
 
+
+# labirinth related constants
+const LEVEL_COUNT: int = 5
+const ENEMY_COUNT: int = 24
 const LABIRINTH_TILE_SIZE: Vector2 = Vector2(128, 128)
 const LABIRINTH_TRAP_PROBABILITY: float = 0.1
 const LABIRINTH_TRAP_COUNT: int = 8
-
-# level related constants
-const LEVELS_COUNT: int = 5
-const ENEMIES_PER_LEVEL: int = 24
+const LABIRINTH_TRAP_MULTIPLIER: int = 2
 # world
+const LABIRINTH_ENEMY_REGENERATION_DELAY: int = 4
 const LABIRINTH_DIMENSIONS: Dictionary = {
 	1: Vector2i(12, 12),
 	2: Vector2i(13, 13),

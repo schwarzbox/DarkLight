@@ -10,12 +10,14 @@ HINT: 'W' or '↑' - up, 'A' or '→'' - right, 'S' '↓' - down, 'D' '←' - le
 
 Made with Godot
 
-Engine: [Godot](https://godotengine.org)
-
 Design/Art/Code: [Aliaksandr Veledzimovich](https://twitter.com/veledzimovich)
 
-Music: [Mubert](https://mubert.com/render)
+Music: [Mubert](https://mubert.com)
+
+Engine: [Godot](https://godotengine.org/) [License](https://godotengine.org/license)
 
 ![Screenshot](screenshot/screenshot1.png)
 ![Screenshot](screenshot/screenshot2.png)
 ![Screenshot](screenshot/screenshot3.png)
+![Screenshot](screenshot/screenshot4.png)
+![Screenshot](screenshot/screenshot5.png)

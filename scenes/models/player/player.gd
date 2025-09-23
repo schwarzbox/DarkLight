@@ -18,7 +18,7 @@ signal strike_finished
 
 var sprite_size: Vector2
 
-var _force: float = 296.0
+var _force: float = 384.0
 var _linear_velocity: Vector2 = Vector2.ZERO:
 	set = set_linear_velocity
 var _dump: bool = false:
@@ -39,7 +39,7 @@ var _shoot_count: int = Globals.MIN_SHOOT_COUNT:
 	set = set_shoot_count
 
 var _is_strike: bool = false
-var _strike_force: float = 0
+var _strike_force: float = 0.0
 var _strike_force_step: float = Globals.MIN_STRIKE_FORCE_STEP:
 	get = get_strike_force_step,
 	set = set_strike_force_step
@@ -116,7 +116,6 @@ func _process(delta: float) -> void:
 			var collision_normal: Vector2 = $ShapeCast2D.get_collision_normal(index)
 			collider.avoid_light(collision_point.bounce(collision_normal))
 
-
 	# collision
 	var collision: KinematicCollision2D = move_and_collide(_linear_velocity * delta)
 	if collision:
@@ -147,12 +146,17 @@ func _process(delta: float) -> void:
 func start(pos: Vector2, shape_cast_max_results: int) -> void:
 	position = pos
 	$ShapeCast2D.max_results = shape_cast_max_results
-	# reset player
+	# restore shoot
+	_is_shoot = false
+	_is_strike = false
+	_strike_force = 0.0
+	# restore shape
 	_update_shape()
 	# restore player alpha
 	modulate = Globals.COLORS.DEFAULT_WHITE
 	# restore radial light
 	$RadialLight.set_light_color(Globals.COLORS.DEFAULT_WHITE)
+	# restore win
 	set_win(false)
 
 func hit(damage: int = 1) -> void:

@@ -21,7 +21,10 @@ func _start() -> void:
 	var score_entries: Dictionary = Globals.SCORES.get_scores()
 	var score_keys: Array = score_entries.keys()
 	score_keys.reverse()
-
+	if score_keys:
+		$CanvasLayer/ScoreContainer/VBoxContainer/Columns/Title.show()
+	else:
+		$CanvasLayer/ScoreContainer/VBoxContainer/Columns/Title.hide()
 	# show 10 best scores
 	var rows: Array[Node] = $CanvasLayer/ScoreContainer/VBoxContainer/Columns/Rows.get_children()
 	var rows_size: int = rows.size()

@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform float speed = 0.02;
+uniform float speed = 0.024;
 
 vec2 rotate_uv(vec2 uv, vec2 pivot, float rotation) {
 	float sin_rotation = sin(rotation);

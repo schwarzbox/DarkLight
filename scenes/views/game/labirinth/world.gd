@@ -42,9 +42,12 @@ func set_models(level: int, enemy_count: int) -> void:
 
 
 			if _map[x][y] == Globals.Models.EMPTY:
+				var labirinth_trap_count: int = (
+					Globals.LABIRINTH_TRAP_COUNT + level * Globals.LABIRINTH_TRAP_MULTIPLIER
+				)
 				if (
 					randf() < Globals.LABIRINTH_TRAP_PROBABILITY
-					&& trap_count < Globals.LABIRINTH_TRAP_COUNT
+					&& trap_count < labirinth_trap_count
 				):
 					_map[x][y] = Globals.Models.TRAP
 					_create_trap(pos)
@@ -52,6 +55,10 @@ func set_models(level: int, enemy_count: int) -> void:
 
 	_create_enter(enter_position)
 	_create_exit(exit_position)
+
+	# setup regeneration
+	$EnemyRegenearationTimer.wait_time = Globals.LABIRINTH_ENEMY_REGENERATION_DELAY
+	$EnemyRegenearationTimer.connect("timeout", Callable(regenerate).bind(level, enemy_count))
 
 	create_enemies(level, enemy_count)
 
@@ -61,6 +68,16 @@ func create_enemies(level: int, enemy_count: int) -> void:
 
 	# setup flock
 	$Flock.start(level)
+	# restart regeration timer
+	$EnemyRegenearationTimer.start()
+
+func regenerate(level: int, enemy_count: int) -> void:
+	var enemies: Array = get_tree().get_nodes_in_group("enemy")
+	if enemies && len(enemies) < enemy_count:
+		var parent: Enemy = enemies.pick_random()
+		var enemy: Enemy = Globals.ENEMY_SCENE.instantiate()
+		add_models_child(enemy)
+		enemy.start(parent.global_position, level)
 
 func set_player(player: Player, shape_cast_max_results: int) -> void:
 	add_models_child(player)

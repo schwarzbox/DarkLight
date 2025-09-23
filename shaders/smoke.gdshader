@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
 uniform sampler2D noise_image;
-uniform float speed = 0.4;
+uniform float speed = -0.4;
 
 vec2 rotate_uv(vec2 uv, vec2 pivot, float rotation) {
 	float sin_rotation = sin(rotation);

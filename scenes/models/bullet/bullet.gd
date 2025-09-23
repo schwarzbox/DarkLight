@@ -36,6 +36,9 @@ func _ready() -> void:
 	# set blast radius
 	$BlastRadius/CollisionShape2D.shape.radius = Globals.BULLET_BLAST_RADIUS
 
+	# hide radial light
+	$RadialLight.hide()
+
 func _process(delta: float) -> void:
 	if is_dead():
 		return
@@ -53,9 +56,14 @@ func _process(delta: float) -> void:
 	var velocity_length_squared: float = _linear_velocity.length_squared()
 
 	if velocity_length_squared < Globals.BULLET_STRIKE_FORCE_SQUARED:
+		$Sprite2D.modulate = Globals.GLOW_COLORS.MIDDLE
 		$TrailParticles.emitting = false
+		$RadialLight.hide()
 	else:
+
+		$Sprite2D.modulate = Globals.GLOW_COLORS.HIGH
 		$TrailParticles.emitting = true
+		$RadialLight.show()
 
 	var collision: KinematicCollision2D = move_and_collide(_linear_velocity * delta)
 	# collide

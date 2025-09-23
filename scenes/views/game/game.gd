@@ -74,7 +74,7 @@ func _restart(view: Node) -> void:
 func _change(view: Node) -> void:
 	main_audio_resumed.emit()
 
-	if level >= Globals.LEVELS_COUNT:
+	if level >= Globals.LEVEL_COUNT:
 		# show score view
 		view_changed.emit(view)
 	else:

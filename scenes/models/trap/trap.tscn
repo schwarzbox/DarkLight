@@ -11,7 +11,7 @@ size = Vector2(128, 128)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ewxc"]
 shader = ExtResource("2_gq8xo")
 shader_parameter/noise_image = ExtResource("3_8ewxc")
-shader_parameter/speed = 0.4
+shader_parameter/speed = -0.4
 
 [node name="Trap" type="Area2D"]
 collision_layer = 32

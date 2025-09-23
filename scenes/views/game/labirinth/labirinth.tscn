@@ -24,7 +24,7 @@ glow_blend_mode = 0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5y3gc"]
 shader = ExtResource("3_621x1")
-shader_parameter/speed = 0.02
+shader_parameter/speed = 0.024
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_agm6p"]
 noise_type = 2
@@ -47,7 +47,7 @@ shader_parameter/thickness = 0.0
 
 [sub_resource type="Animation" id="Animation_cl31p"]
 resource_name = "Pulse"
-length = 0.4
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -55,7 +55,7 @@ tracks/0/path = NodePath("ShockWave:material:shader_parameter/radius")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
+"times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 0.6]
@@ -67,7 +67,7 @@ tracks/1/path = NodePath("ShockWave:material:shader_parameter/force")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
+"times": PackedFloat32Array(0, 0.4, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.08, 0.0]
@@ -79,7 +79,7 @@ tracks/2/path = NodePath("ShockWave:material:shader_parameter/thickness")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
+"times": PackedFloat32Array(0, 0.4, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.2, 0.0]
@@ -252,10 +252,13 @@ libraries = {
 &"": SubResource("AnimationLibrary_c4anp")
 }
 
-[node name="Flock" type="Node2D" parent="World" index="5"]
+[node name="EnemyRegenearationTimer" type="Timer" parent="World" index="5"]
+wait_time = 10.0
+
+[node name="Flock" type="Node2D" parent="World" index="6"]
 script = ExtResource("7_teq8j")
 
-[node name="Models" type="Node2D" parent="World" index="6"]
+[node name="Models" type="Node2D" parent="World" index="7"]
 
 [node name="AudioStreamPlayer1" type="AudioStreamPlayer" parent="." index="3"]
 stream = ExtResource("5_8hcee")
