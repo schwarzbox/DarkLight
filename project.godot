@@ -22,7 +22,6 @@ config/icon="res://icon.png"
 
 Transition="*res://autoloads/transition.tscn"
 Globals="*res://autoloads/globals.gd"
-Debug="*res://autoloads/debug.gd"
 
 [debug]
 

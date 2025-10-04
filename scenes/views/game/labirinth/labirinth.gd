@@ -10,8 +10,8 @@ var _state: Dictionary = {}
 
 @onready var _ui_containers: Dictionary = {
 	"level": $CanvasLayer/LevelContainer,
-	"game_over": $CanvasLayer/GameOverContainer,
-	"pause": $CanvasLayer/PauseContainer
+	"pause": $CanvasLayer/PauseContainer,
+	"game_over": $CanvasLayer/GameOverContainer
 }
 @onready var _audio_stream_players: Array[AudioStreamPlayer] = [
 	$AudioStreamPlayer1,
@@ -27,7 +27,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.pressed:
 			if event.keycode == KEY_ESCAPE:
-				pause()
+				_pause()
 
 func add_models_child(child: Node2D) -> void:
 	$World.add_models_child(child)
@@ -75,13 +75,6 @@ func restart(player: Player) -> void:
 
 	$World.set_player(player, enemy_count)
 
-func pause() -> void:
-	get_tree().paused = not get_tree().paused
-	if get_tree().paused:
-		_show_pause()
-	else:
-		_hide_pause()
-
 func _show_ui_container(key: String = "", alpha: float = 0.0) -> void:
 	for ui_container: Control in _ui_containers.values():
 		ui_container.hide()
@@ -93,7 +86,15 @@ func _show_ui_container(key: String = "", alpha: float = 0.0) -> void:
 		ui_container.modulate.a = alpha
 
 func _init_view() -> void:
+	_audio_stream_player.volume_db = _audio_stream_player.volume_db - 20
 	_audio_stream_player.play()
+	var tween: Tween = create_tween()
+	tween.tween_property(
+		_audio_stream_player,
+		"volume_db",
+		_audio_stream_player.volume_db + 10,
+		Globals.UI_DELAY
+	)
 
 	$World.process_mode = Node.PROCESS_MODE_PAUSABLE
 	$CursorLayer/Cursor.hide_mouse_cursor()
@@ -116,16 +117,28 @@ func _show_level() -> void:
 			$CanvasLayer/LevelContainer.hide()
 	)
 
+func _pause() -> void:
+	get_tree().paused = not get_tree().paused
+	if get_tree().paused:
+		_show_pause()
+	else:
+		_hide_pause()
+
 func _show_pause() -> void:
 	$CursorLayer/Cursor.show_mouse_cursor()
-
-	_audio_stream_player.stream_paused = true
 
 	_show_ui_container("pause", 0.0)
 
 	_kill_tween(_pause_tween)
 	_pause_tween = create_tween()
 	_pause_tween.tween_property($CanvasLayer/PauseContainer, "modulate:a", 1.0, Globals.UI_DELAY)
+	_pause_tween.parallel().tween_property(
+		_audio_stream_player,
+		"volume_db",
+		_audio_stream_player.volume_db - 20,
+		Globals.UI_DELAY
+	)
+	_pause_tween.tween_callback(func() -> void: _audio_stream_player.stream_paused = true)
 
 	# stop game time
 	Globals.SCORES.save_game_time()
@@ -138,6 +151,12 @@ func _hide_pause() -> void:
 	_kill_tween(_pause_tween)
 	_pause_tween = create_tween()
 	_pause_tween.tween_property($CanvasLayer/PauseContainer, "modulate:a", 0.0, Globals.UI_DELAY)
+	_pause_tween.parallel().tween_property(
+		_audio_stream_player,
+		"volume_db",
+		_audio_stream_player.volume_db + 20,
+		Globals.UI_DELAY
+	)
 	_pause_tween.tween_callback(
 		func() -> void:
 			$CanvasLayer/PauseContainer.hide()
@@ -156,13 +175,14 @@ func _show_game_over(text: String, callable: Callable) -> void:
 	_game_over_tween.parallel().tween_property(
 		_audio_stream_player,
 		"volume_db",
-		_audio_stream_player.volume_db - 10,
+		_audio_stream_player.volume_db - 20,
 		Globals.UI_DELAY
 	)
 	_game_over_tween.tween_callback(func() -> void: _set_transition(callable, self))
 
 func _reset_view(callable: Callable) -> void:
-	pause()
+	_pause()
+	# _reset_view called when _audio_stream_player.stream_paused = true
 	_audio_stream_player.stop()
 	$World.process_mode = Node.PROCESS_MODE_DISABLED
 	_set_transition(callable, self)
@@ -223,7 +243,7 @@ func _on_player_died() -> void:
 	_show_game_over("NO MORE LIGHT", _exit)
 
 func _on_resume_pressed() -> void:
-	pause()
+	_pause()
 
 func _on_restart_pressed() -> void:
 	_reset_view(_restart)

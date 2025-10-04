@@ -17,14 +17,21 @@ var _destroyed: bool = false:
 
 
 func hit(damage: int) -> void:
-	if _destroyed:
+	if is_destroyed():
 		return
 
 	set_hp(_hp - damage)
 	if _hp <= _min_hp:
-		if !_destroyed:
-			_destroyed = true
-			destroyed.emit()
+		_destroyed = true
+		destroyed.emit()
+
+func self_destroy() -> void:
+	if is_destroyed():
+		return
+
+	_destroyed = true
+	self_destroyed.emit()
+
 
 func get_hp() -> int:
 	return _hp
@@ -33,21 +40,16 @@ func set_hp(value: int) -> void:
 	_hp = value
 	hp_changed.emit(value)
 
-func hp_ratio() -> float:
-	return float(_hp) / float(_max_hp)
-
-func regenerate(hp: int = 1) -> void:
-	if is_damaged():
-		var value: int = clampi(_hp + hp, _min_hp, _max_hp)
-		set_hp(value)
-
 func is_damaged() -> bool:
 	return _hp < _max_hp
 
 func is_destroyed() -> bool:
 	return _destroyed
 
-func self_destroy() -> void:
-	if !_destroyed:
-		_destroyed = true
-		self_destroyed.emit()
+func regenerate(hp: int = 1) -> void:
+	if is_damaged():
+		var value: int = clampi(_hp + hp, _min_hp, _max_hp)
+		set_hp(value)
+
+func hp_ratio() -> float:
+	return float(_hp) / float(_max_hp)

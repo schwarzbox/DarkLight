@@ -13,16 +13,16 @@
 [node name="Game" instance=ExtResource("1")]
 script = ExtResource("2")
 
-[node name="UpgradeContainer" type="CenterContainer" parent="CanvasLayer" index="0"]
+[node name="UpgradesContainer" type="CenterContainer" parent="CanvasLayer" index="0"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UpgradeContainer" index="0"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UpgradesContainer" index="0"]
 layout_mode = 2
 theme_override_constants/separation = 42
 
-[node name="Label" type="Label" parent="CanvasLayer/UpgradeContainer/VBoxContainer" index="0"]
+[node name="Label" type="Label" parent="CanvasLayer/UpgradesContainer/VBoxContainer" index="0"]
 layout_mode = 2
 text = "Upgrades"
 label_settings = ExtResource("3_8ytot")
@@ -30,12 +30,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UpgradeContainer/VBoxContainer" index="1"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UpgradesContainer/VBoxContainer" index="1"]
 layout_mode = 2
 theme_override_constants/separation = 42
 alignment = 1
 
-[node name="Shoot" parent="CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer" index="0" instance=ExtResource("4_8ytot")]
+[node name="Shoot" parent="CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer" index="0" instance=ExtResource("4_8ytot")]
 layout_mode = 2
 toggle_mode = true
 action_mode = 0
@@ -43,7 +43,7 @@ text = ""
 icon = ExtResource("5_wywps")
 icon_alignment = 1
 
-[node name="Strike" parent="CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer" index="1" instance=ExtResource("4_8ytot")]
+[node name="Strike" parent="CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer" index="1" instance=ExtResource("4_8ytot")]
 layout_mode = 2
 toggle_mode = true
 action_mode = 0
@@ -51,7 +51,7 @@ text = ""
 icon = ExtResource("6_sd2ii")
 icon_alignment = 1
 
-[node name="Shield" parent="CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer" index="2" instance=ExtResource("4_8ytot")]
+[node name="Shield" parent="CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer" index="2" instance=ExtResource("4_8ytot")]
 layout_mode = 2
 toggle_mode = true
 action_mode = 0
@@ -59,20 +59,20 @@ text = ""
 icon = ExtResource("7_sd2ii")
 icon_alignment = 1
 
-[node name="Play" parent="CanvasLayer/UpgradeContainer/VBoxContainer" index="2" instance=ExtResource("4_8ytot")]
+[node name="Play" parent="CanvasLayer/UpgradesContainer/VBoxContainer" index="2" instance=ExtResource("4_8ytot")]
 layout_mode = 2
 text = ""
 icon = ExtResource("8_qkv02")
 icon_alignment = 1
 
-[node name="Back" parent="CanvasLayer/UpgradeContainer/VBoxContainer" index="3" instance=ExtResource("4_8ytot")]
+[node name="Back" parent="CanvasLayer/UpgradesContainer/VBoxContainer" index="3" instance=ExtResource("4_8ytot")]
 layout_mode = 2
 text = ""
 icon = ExtResource("9_6efes")
 icon_alignment = 1
 
-[connection signal="toggled" from="CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Shoot" to="." method="_on_shoot_toggled"]
-[connection signal="toggled" from="CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Strike" to="." method="_on_strike_toggled"]
-[connection signal="toggled" from="CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Shield" to="." method="_on_shield_toggled"]
-[connection signal="pressed" from="CanvasLayer/UpgradeContainer/VBoxContainer/Play" to="." method="_on_view_started"]
-[connection signal="pressed" from="CanvasLayer/UpgradeContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="toggled" from="CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Shoot" to="." method="_on_shoot_toggled"]
+[connection signal="toggled" from="CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Strike" to="." method="_on_strike_toggled"]
+[connection signal="toggled" from="CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Shield" to="." method="_on_shield_toggled"]
+[connection signal="pressed" from="CanvasLayer/UpgradesContainer/VBoxContainer/Play" to="." method="_on_view_started"]
+[connection signal="pressed" from="CanvasLayer/UpgradesContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]

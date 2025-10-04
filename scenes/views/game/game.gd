@@ -3,18 +3,18 @@ extends View
 signal main_audio_paused
 signal main_audio_resumed
 
-var player: Player = null
-var labirinth: View = null
-var level: int = 0
+var _player: Player = null
+var _labirinth: View = null
+var _level: int = 0
 
 var _upgrade_button_group: ButtonGroup = ButtonGroup.new()
 
 func _ready() -> void:
 	# setup upgrade radio buttons
 	for button: Button in [
-		$CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Shoot,
-		$CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Strike,
-		$CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Shield
+		$CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Shoot,
+		$CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Strike,
+		$CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Shield
 	]:
 		button.set_button_group(_upgrade_button_group)
 	_upgrade_button_group.allow_unpress = true
@@ -22,21 +22,21 @@ func _ready() -> void:
 	_setup()
 
 func _setup() -> void:
-	level = 0
-	labirinth = Globals.LABIRINTH_SCENE.instantiate()
-	player = Globals.PLAYER_SCENE.instantiate()
+	_level = 0
+	_labirinth = Globals.LABIRINTH_SCENE.instantiate()
+	_player = Globals.PLAYER_SCENE.instantiate()
 
 	$CanvasLayer.show()
-	$CanvasLayer/UpgradeContainer/VBoxContainer/Play.disabled = true
+	$CanvasLayer/UpgradesContainer/VBoxContainer/Play.disabled = true
 
-	# call _start(labirinth) to skip Upgrades screen
-	_start(labirinth)
+	# call _start(_labirinth) to skip Upgrades screen
+	_start(_labirinth)
 
 
 func _start(view: Node) -> void:
 	main_audio_paused.emit()
 
-	level += 1
+	_level += 1
 	view.connect("view_restarted", _on_view_restarted)
 	view.connect("view_changed", _on_view_changed)
 	view.connect("view_exited", _on_view_exited)
@@ -46,52 +46,52 @@ func _start(view: Node) -> void:
 	for button: UIButton in _upgrade_button_group.get_buttons():
 		button.set_pressed_no_signal(false)
 
-	if player.get_shoot_count() >= Globals.MAX_SHOOT_COUNT:
-		$CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Shoot.disabled = true
+	if _player.get_shoot_count() >= Globals.MAX_SHOOT_COUNT:
+		$CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Shoot.disabled = true
 	else:
-		$CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Shoot.disabled = false
+		$CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Shoot.disabled = false
 
-	if player.get_strike_force_step() >= Globals.MAX_STRIKE_FORCE_STEP:
-		$CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Strike.disabled = true
+	if _player.get_strike_force_step() >= Globals.MAX_STRIKE_FORCE_STEP:
+		$CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Strike.disabled = true
 	else:
-		$CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Strike.disabled = false
+		$CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Strike.disabled = false
 
-	if player.get_shield_count() >= Globals.MAX_SHIELD_COUNT:
-		$CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Shield.disabled = true
+	if _player.get_shield_count() >= Globals.MAX_SHIELD_COUNT:
+		$CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Shield.disabled = true
 	else:
-		$CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Shield.disabled = false
+		$CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Shield.disabled = false
 
 	# player setup in view
-	view.start(level, player)
+	view.start(_level, _player)
 
 	if is_world_has_children():
 		$CanvasLayer.hide()
 
 func _restart(view: Node) -> void:
-	view.remove_models_child(player)
-	view.restart(player)
+	view.remove_models_child(_player)
+	view.restart(_player)
 
 func _change(view: Node) -> void:
 	main_audio_resumed.emit()
 
-	if level >= Globals.LEVEL_COUNT:
+	if _level >= Globals.LEVEL_COUNT:
 		# show score view
 		view_changed.emit(view)
 	else:
 		# save player
-		view.remove_models_child(player)
+		view.remove_models_child(_player)
 		# clear view
 		remove_world_child(view)
 		view.queue_free()
 		# initialize new labirinth
-		labirinth = Globals.LABIRINTH_SCENE.instantiate()
+		_labirinth = Globals.LABIRINTH_SCENE.instantiate()
 
 		# show upgrades screen
 		$CanvasLayer.show()
-		$CanvasLayer/UpgradeContainer/VBoxContainer/Play.disabled = true
+		$CanvasLayer/UpgradesContainer/VBoxContainer/Play.disabled = true
 
 func _on_view_started() -> void:
-	_set_transition(_start, labirinth)
+	_set_transition(_start, _labirinth)
 
 func _on_view_restarted(view: Node) -> void:
 	_set_transition(_restart, view)
@@ -112,38 +112,38 @@ func _on_back_pressed() -> void:
 
 func _on_shoot_toggled(toggled_on: bool) -> void:
 	if toggled_on:
-		player.set_shoot_count(Globals.SHOOT_COUNT_DIFF)
-		$CanvasLayer/UpgradeContainer/VBoxContainer/Play.disabled = false
+		_player.set_shoot_count(Globals.SHOOT_COUNT_DIFF)
+		$CanvasLayer/UpgradesContainer/VBoxContainer/Play.disabled = false
 	else:
-		player.set_shoot_count(-Globals.SHOOT_COUNT_DIFF)
-		$CanvasLayer/UpgradeContainer/VBoxContainer/Play.disabled = true
+		_player.set_shoot_count(-Globals.SHOOT_COUNT_DIFF)
+		$CanvasLayer/UpgradesContainer/VBoxContainer/Play.disabled = true
 
-	$CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Shoot.icon = Globals.UPGRADE_ICONS["shoot"][
-		player.get_shoot_count()
+	$CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Shoot.icon = Globals.UPGRADE_ICONS["shoot"][
+		_player.get_shoot_count()
 	]
 
 func _on_strike_toggled(toggled_on: bool) -> void:
 	if toggled_on:
-		player.set_strike_force_step(Globals.STRIKE_FORCE_STEP_DIFF)
-		player.set_max_strike_force(Globals.MAX_STRIKE_FORCE_DIFF)
-		$CanvasLayer/UpgradeContainer/VBoxContainer/Play.disabled = false
+		_player.set_strike_force_step(Globals.STRIKE_FORCE_STEP_DIFF)
+		_player.set_max_strike_force(Globals.MAX_STRIKE_FORCE_DIFF)
+		$CanvasLayer/UpgradesContainer/VBoxContainer/Play.disabled = false
 	else:
-		player.set_strike_force_step(-Globals.STRIKE_FORCE_STEP_DIFF)
-		player.set_max_strike_force(-Globals.MAX_STRIKE_FORCE_DIFF)
-		$CanvasLayer/UpgradeContainer/VBoxContainer/Play.disabled = true
+		_player.set_strike_force_step(-Globals.STRIKE_FORCE_STEP_DIFF)
+		_player.set_max_strike_force(-Globals.MAX_STRIKE_FORCE_DIFF)
+		$CanvasLayer/UpgradesContainer/VBoxContainer/Play.disabled = true
 
-	$CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Strike.icon = Globals.UPGRADE_ICONS["strike"][
-		int(player.get_strike_force_step())
+	$CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Strike.icon = Globals.UPGRADE_ICONS["strike"][
+		int(_player.get_strike_force_step())
 	]
 
 func _on_shield_toggled(toggled_on: bool) -> void:
 	if toggled_on:
-		player.set_shield_count(Globals.SHIELD_COUNT_DIFF)
-		$CanvasLayer/UpgradeContainer/VBoxContainer/Play.disabled = false
+		_player.set_shield_count(Globals.SHIELD_COUNT_DIFF)
+		$CanvasLayer/UpgradesContainer/VBoxContainer/Play.disabled = false
 	else:
-		player.set_shield_count(-Globals.SHIELD_COUNT_DIFF)
-		$CanvasLayer/UpgradeContainer/VBoxContainer/Play.disabled = true
+		_player.set_shield_count(-Globals.SHIELD_COUNT_DIFF)
+		$CanvasLayer/UpgradesContainer/VBoxContainer/Play.disabled = true
 
-	$CanvasLayer/UpgradeContainer/VBoxContainer/HBoxContainer/Shield.icon = Globals.UPGRADE_ICONS["shield"][
-		int(player.get_shield_count())
+	$CanvasLayer/UpgradesContainer/VBoxContainer/HBoxContainer/Shield.icon = Globals.UPGRADE_ICONS["shield"][
+		int(_player.get_shield_count())
 	]

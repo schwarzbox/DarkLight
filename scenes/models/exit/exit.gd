@@ -24,6 +24,9 @@ func _set_open(value: bool) -> void:
 	_open = value
 	$CollisionShape2D.set_deferred("disabled", !_open)
 	if _open:
+		modulate.a = 0.0
+		var tween: Tween = create_tween()
+		tween.tween_property(self, "modulate:a", 1.0, Globals.EXIT_OPEN_DELAY)
 		$Sprite2D.modulate = Globals.GLOW_COLORS.LOW
 		$RadialLight.show()
 	else:
@@ -32,4 +35,5 @@ func _set_open(value: bool) -> void:
 
 func _on_body_entered(body: Player) -> void:
 	$Sprite2D.modulate = Globals.GLOW_COLORS.HIGH
-	body.win(self)
+	if is_instance_valid(body):
+		body.win(self)

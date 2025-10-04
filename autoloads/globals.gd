@@ -57,6 +57,7 @@ const PLAYER_MAX_SHOOT_KICK_FORCE: float = 256.0
 const PLAYER_MAX_HIT_KICK_FORCE: float = 36.0
 const PLAYER_SHIELD_FORCE_MULTIPLIER: float = 42.0
 const PLAYER_ORB_FORCE_MULTIPLIER: float = 8.0
+const EXIT_OPEN_DELAY: float = 2.0
 const ENEMY_SCALE_DELAY: float = 0.8
 const ENEMY_CATCH_PLAYER_SQUARED_DISTANCE: float = 16384.0
 const ENEMY_SHOOT_PLAYER_SQUARED_DISTANCE: float = 131072.0
@@ -172,8 +173,8 @@ const COLORS: Dictionary = {
 }
 
 const GLOW_COLORS: Dictionary = {
-	HIGH = Color(1.8, 1.8, 1.8, 1.0),
-	MIDDLE = Color(1.5, 1.5, 1.5, 1.0),
+	HIGH = Color(2.0, 2.0, 2.0, 1.0),
+	MIDDLE = Color(1.6, 1.6, 1.6, 1.0),
 	LOW = Color(1.2, 1.2, 1.2, 1.0),
 }
 

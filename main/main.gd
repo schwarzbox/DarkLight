@@ -1,12 +1,9 @@
 extends View
 
-# make about similar to native when clicked
-# remove LICENSE from ABOUT
-# update git README make it similar to itch.io
-# release
-
-# windows version
-# dev log balance (light bullet, exit, hide from light, flock)
+# add help menu with controls
+# fix git pages
+# windows linux version
+# add dev log balance (light bullet, exit, hide from light, flock)
 
 var _game_view: View = null
 var _score_view: View = null
@@ -18,16 +15,16 @@ func _ready() -> void:
 
 	if OS.has_feature("web"):
 		# remove score for web
-		$CanvasLayer/CenterContainer/VBoxContainer/VBoxContainer/Score.hide()
+		$CanvasLayer/MainContainer/VBoxContainer/VBoxContainer/Score.hide()
 
 	# play intro
 	$AudioStreamPlayer.volume_db = $AudioStreamPlayer.volume_db - 10
 	$AudioStreamPlayer.play()
 	_on_main_audio_resumed()
 
-	# Set world color
+	# set world color
 	RenderingServer.set_default_clear_color(Globals.COLORS.DEFAULT_BLACK)
-	# Set custom cursor
+	# set custom cursor
 	var sprite_size: Vector2 = Globals.CURSOR_ARROW_ICON.get_size()
 	Input.set_custom_mouse_cursor(
 		Globals.CURSOR_ARROW_ICON, Input.CursorShape.CURSOR_ARROW, sprite_size / 2
@@ -42,6 +39,8 @@ func _ready() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_ABOUT:
+		if OS.has_feature("web"):
+			return
 		_about.call_deferred()
 
 func _about() -> void:
@@ -69,7 +68,7 @@ func _setup() -> void:
 	_game_view.connect("main_audio_resumed", _on_main_audio_resumed)
 
 	_score_view = Globals.SCORE_SCENE.instantiate()
-	_score_view.connect("view_exited", self._on_view_exited)
+	_score_view.connect("view_exited", _on_view_exited)
 
 	$CanvasLayer.show()
 
@@ -98,7 +97,7 @@ func _on_main_audio_paused() -> void:
 	_audio_tween.tween_property(
 		$AudioStreamPlayer,
 		"volume_db",
-		$AudioStreamPlayer.volume_db - 10,
+		$AudioStreamPlayer.volume_db - 20,
 		Globals.UI_DELAY
 	)
 	_audio_tween.tween_callback(func() -> void: $AudioStreamPlayer.stream_paused = true)
@@ -111,7 +110,7 @@ func _on_main_audio_resumed() -> void:
 	_audio_tween.tween_property(
 		$AudioStreamPlayer,
 		"volume_db",
-		$AudioStreamPlayer.volume_db + 10,
+		$AudioStreamPlayer.volume_db + 20,
 		Globals.UI_DELAY
 	)
 
