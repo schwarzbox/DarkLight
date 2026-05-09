@@ -11,7 +11,8 @@ var _force: float = 256.0
 var _linear_velocity: Vector2 = Vector2.ZERO:
 	set = set_linear_velocity
 var _linear_acceleration: Vector2 = Vector2.ZERO:
-	get = get_linear_acceleration
+	get = get_linear_acceleration,
+	set = set_linear_acceleration
 
 var _target: Player
 var _level: int  = 1

@@ -23,12 +23,12 @@ height = 256
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="Gradient" id="Gradient_gfsmh"]
-offsets = PackedFloat32Array(0.517483, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
 [sub_resource type="Gradient" id="Gradient_vd5br"]
 offsets = PackedFloat32Array(0.50872093, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_gfsmh"]
+offsets = PackedFloat32Array(0.517483, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="Bullet" type="AnimatableBody2D"]
@@ -58,6 +58,24 @@ visible = false
 [node name="PointLight2D" parent="RadialLight" index="0"]
 texture = SubResource("GradientTexture2D_clsqe")
 
+[node name="TrailParticles" type="CPUParticles2D" parent="."]
+amount = 512
+texture = ExtResource("2_y352c")
+lifetime = 0.4
+randomness = 0.4
+fixed_fps = 60
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector2(-1, 0)
+spread = 64.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 32.0
+initial_velocity_max = 128.0
+tangential_accel_min = -50.0
+tangential_accel_max = 50.0
+scale_amount_min = 0.4
+color_ramp = SubResource("Gradient_vd5br")
+
 [node name="ExplodeParticles" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 128
@@ -76,24 +94,6 @@ initial_velocity_max = 196.0
 scale_amount_min = 0.2
 scale_amount_max = 0.6
 color_ramp = SubResource("Gradient_gfsmh")
-
-[node name="TrailParticles" type="CPUParticles2D" parent="."]
-amount = 512
-texture = ExtResource("2_y352c")
-lifetime = 0.4
-randomness = 0.4
-fixed_fps = 60
-emission_shape = 1
-emission_sphere_radius = 4.0
-direction = Vector2(-1, 0)
-spread = 64.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 32.0
-initial_velocity_max = 128.0
-tangential_accel_min = -50.0
-tangential_accel_max = 50.0
-scale_amount_min = 0.4
-color_ramp = SubResource("Gradient_vd5br")
 
 [connection signal="body_entered" from="BlastRadius" to="." method="_on_blast_radius_body_entered"]
 [connection signal="body_exited" from="BlastRadius" to="." method="_on_blast_radius_body_exited"]

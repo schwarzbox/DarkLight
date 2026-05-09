@@ -1,6 +1,5 @@
 extends View
 
-
 func _ready() -> void:
 	_start()
 

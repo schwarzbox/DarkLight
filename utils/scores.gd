@@ -1,5 +1,7 @@
 extends Resource
 
+const FILE_PATH: String = "user://scores.tres"
+
 # export is required
 @export var scores: Dictionary = {}
 
@@ -37,12 +39,12 @@ func set_score(text: String) -> void:
 	reset_game_time()
 
 func _save_data() -> void:
-	var result: Error = ResourceSaver.save(self, Globals.SCORES_FILE_PATH)
+	var result: Error = ResourceSaver.save(self, FILE_PATH)
 	assert(result == OK)
 
 
 func _load_data() -> void:
-	if ResourceLoader.exists(Globals.SCORES_FILE_PATH):
-		var resource: Resource = ResourceLoader.load(Globals.SCORES_FILE_PATH)
+	if ResourceLoader.exists(FILE_PATH):
+		var resource: Resource = ResourceLoader.load(FILE_PATH)
 		if resource is Resource:
 			scores = resource.scores

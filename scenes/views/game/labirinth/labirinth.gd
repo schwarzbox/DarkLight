@@ -46,7 +46,6 @@ func start(level: int, player: Player) -> void:
 	player.connect("strike_initiated", _on_player_strike_initiated)
 	player.connect("strike_updated", _on_player_strike_updated)
 	player.connect("strike_finished", _on_player_strike_finished)
-
 	player.connect("bullet_added", add_models_child)
 	player.connect("bullet_blasted", _on_player_bullet_blasted)
 	player.connect("bullet_removed", _on_player_bullet_removed)
@@ -86,13 +85,13 @@ func _show_ui_container(key: String = "", alpha: float = 0.0) -> void:
 		ui_container.modulate.a = alpha
 
 func _init_view() -> void:
-	_audio_stream_player.volume_db = _audio_stream_player.volume_db - 20
+	_audio_stream_player.volume_db = _audio_stream_player.volume_db - Globals.VOLUME_FADE_AMOUNT
 	_audio_stream_player.play()
 	var tween: Tween = create_tween()
 	tween.tween_property(
 		_audio_stream_player,
 		"volume_db",
-		_audio_stream_player.volume_db + 10,
+		_audio_stream_player.volume_db + Globals.VOLUME_FADE_AMOUNT,
 		Globals.UI_DELAY
 	)
 
@@ -135,7 +134,7 @@ func _show_pause() -> void:
 	_pause_tween.parallel().tween_property(
 		_audio_stream_player,
 		"volume_db",
-		_audio_stream_player.volume_db - 20,
+		_audio_stream_player.volume_db - Globals.VOLUME_FADE_AMOUNT,
 		Globals.UI_DELAY
 	)
 	_pause_tween.tween_callback(func() -> void: _audio_stream_player.stream_paused = true)
@@ -154,7 +153,7 @@ func _hide_pause() -> void:
 	_pause_tween.parallel().tween_property(
 		_audio_stream_player,
 		"volume_db",
-		_audio_stream_player.volume_db + 20,
+		_audio_stream_player.volume_db + Globals.VOLUME_FADE_AMOUNT,
 		Globals.UI_DELAY
 	)
 	_pause_tween.tween_callback(
@@ -175,7 +174,7 @@ func _show_game_over(text: String, callable: Callable) -> void:
 	_game_over_tween.parallel().tween_property(
 		_audio_stream_player,
 		"volume_db",
-		_audio_stream_player.volume_db - 20,
+		_audio_stream_player.volume_db - Globals.VOLUME_FADE_AMOUNT,
 		Globals.UI_DELAY
 	)
 	_game_over_tween.tween_callback(func() -> void: _set_transition(callable, self))
@@ -223,8 +222,10 @@ func _on_player_bullet_removed(child: Bullet) -> void:
 	orb.start(child.global_position)
 
 func _on_player_bullet_blasted(pos: Vector2, camera_pos: Vector2) -> void:
+	var screen_size: Vector2 = get_window().size
 	$World/ShockWave.material.set_shader_parameter("global_position", pos)
 	$World/ShockWave.material.set_shader_parameter("camera_position", camera_pos)
+	$World/ShockWave.material.set_shader_parameter("screen_size", screen_size)
 	$World/AnimationPlayer.play("Pulse")
 
 func _on_player_won() -> void:

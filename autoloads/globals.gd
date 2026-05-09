@@ -4,6 +4,7 @@ func _ready() -> void:
 	prints(name, "ready")
 
 const UI_DELAY: float = 1.0
+const VOLUME_FADE_AMOUNT: int = 20
 
 const CURSOR_ARROW_ICON: Texture2D = preload("res://shared/icons/cursor_arrow_icon.png")
 const CURSOR_POINTING_HAND_ICON: Texture2D = preload("res://shared/icons/cursor_pointing_hand_icon.png")
@@ -18,6 +19,7 @@ const SHIELD_ICON_1: Texture2D = preload("res://scenes/views/game/shield_icon_1.
 const SHIELD_ICON_2: Texture2D = preload("res://scenes/views/game/shield_icon_2.png")
 const SHIELD_ICON_3: Texture2D = preload("res://scenes/views/game/shield_icon_3.png")
 
+
 const PLAYER_SCENE: PackedScene = preload("res://scenes/models/player/player.tscn")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/models/enemy/enemy.tscn")
 const BULLET_SCENE: PackedScene = preload("res://scenes/models/bullet/bullet.tscn")
@@ -27,6 +29,7 @@ const EXIT_SCENE: PackedScene = preload("res://scenes/models/exit/exit.tscn")
 const WALL_SCENE: PackedScene = preload("res://scenes/models/wall/wall.tscn")
 const TRAP_SCENE: PackedScene = preload("res://scenes/models/trap/trap.tscn")
 
+const ABOUT_SCENE: PackedScene = preload("res://scenes/nodes/views/about/about.tscn")
 const GAME_SCENE: PackedScene = preload("res://scenes/views/game/game.tscn")
 const SCORE_SCENE: PackedScene = preload("res://scenes/views/score/score.tscn")
 const LABIRINTH_SCENE: PackedScene = preload("res://scenes/views/game/labirinth/labirinth.tscn")
@@ -67,6 +70,7 @@ const FLOCK_STEER_FORCE: float = 20.0
 const FLOCK_ALIGNMENT_FORCE: float = 40.0
 const FLOCK_COHESION_FORCE: float = 30.0
 const FLOCK_SEPARATION_FORCE: float = 45.0
+const BULLET_TRAIL_LIFETIME: float = 0.4
 const BULLET_SCALE_DELAY: float = 0.4
 const BULLET_BLAST_DELAY: float = 0.1
 const BULLET_BLAST_RADIUS: float = 68.0
@@ -179,5 +183,4 @@ const GLOW_COLORS: Dictionary = {
 }
 
 # Save scores
-const SCORES_FILE_PATH: String = "user://scores.tres"
 var SCORES: Resource = preload("res://utils/scores.tres")

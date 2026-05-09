@@ -16,15 +16,15 @@ signal strike_finished
 
 @export var type: Globals.Models = Globals.Models.PLAYER
 
-var sprite_size: Vector2
+var sprite_size: Vector2 = Vector2.ZERO
 
 var _force: float = 384.0
 var _linear_velocity: Vector2 = Vector2.ZERO:
 	set = set_linear_velocity
+var _linear_acceleration: Vector2 = Vector2.ZERO
 var _dump: bool = false:
 	get = is_dump,
 	set = set_dump
-var _linear_acceleration: Vector2 = Vector2.ZERO
 
 var _win: bool = false:
 	get = is_win,
@@ -78,16 +78,15 @@ func _ready() -> void:
 	sprite_size = $Sprite2D.texture.get_size()
 	$Sprite2D.modulate = Globals.GLOW_COLORS.MIDDLE
 
+	$HitParticles.emitting = false
+	$HitParticles.lifetime = Globals.PLAYER_HIT_DELAY
+	$HitParticles.fixed_fps = Globals.FIXED_FPS
+	$HitParticles.one_shot = true
+
 	$ExplodeParticles.emitting = false
 	$ExplodeParticles.lifetime = Globals.PLAYER_DIED_DELAY
 	$ExplodeParticles.fixed_fps = Globals.FIXED_FPS
 	$ExplodeParticles.one_shot = true
-
-	$HiiParticles.emitting = false
-	$HiiParticles.lifetime = Globals.PLAYER_HIT_DELAY
-	$HiiParticles.fixed_fps = Globals.FIXED_FPS
-	$HiiParticles.one_shot = true
-
 
 func _process(delta: float) -> void:
 	if is_dead() || is_win():
@@ -152,14 +151,14 @@ func start(pos: Vector2, shape_cast_max_results: int) -> void:
 	_strike_force = 0.0
 	# restore shape
 	_update_shape()
-	# restore player alpha
+	# restore alpha
 	modulate = Globals.COLORS.DEFAULT_WHITE
 	# restore radial light
 	$RadialLight.set_light_color(Globals.COLORS.DEFAULT_WHITE)
 	# restore win
 	set_win(false)
 
-func hit(damage: int = 1) -> void:
+func hit(damage: int) -> void:
 	$Body.hit(damage)
 
 func get_hp() -> int:
@@ -379,6 +378,10 @@ func _cell_beat() -> void:
 		$HitRange/CollisionShape2D, "scale", Vector2(diff, diff), Globals.PLAYER_SCALE_DELAY
 	)
 
+func _kill_tween(tween: Tween) -> void:
+	if tween:
+		tween.kill()
+
 func _alarm_beat() -> void:
 	if _alarm_beat_tween:
 		return
@@ -394,9 +397,6 @@ func _on_alarm_beat_countdown() -> void:
 	else:
 		$RadialLight.set_light_color(Globals.COLORS.DEFAULT_WHITE)
 
-func _kill_tween(tween: Tween) -> void:
-	if tween:
-		tween.kill()
 
 func _on_body_destroyed() -> void:
 	# hide cursor
@@ -435,11 +435,11 @@ func _on_body_destroyed() -> void:
 func _on_body_hp_changed(_value: int) -> void:
 	_update_shape()
 
-func _on_bullet_died(child: Bullet) -> void:
-	bullet_removed.emit(child)
-
 func _on_bullet_blasted(pos: Vector2) -> void:
 	bullet_blasted.emit(pos, $Camera2D.global_position)
+
+func _on_bullet_died(child: Bullet) -> void:
+	bullet_removed.emit(child)
 
 func _on_collect_range_body_entered(body: Orb) -> void:
 	_orb_targets[body.get_instance_id()] = body
@@ -469,4 +469,4 @@ func _on_hit_range_body_entered(body: Enemy) -> void:
 		)
 		if !$HitAudio.is_playing():
 			$HitAudio.play()
-		$HiiParticles.emitting = true
+		$HitParticles.emitting = true

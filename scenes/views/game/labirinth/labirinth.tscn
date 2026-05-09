@@ -40,7 +40,7 @@ seamless = true
 shader = ExtResource("10_cl31p")
 shader_parameter/global_position = Vector2(0, 0)
 shader_parameter/camera_position = Vector2(0, 0)
-shader_parameter/screen_size = Vector2(2048, 2048)
+shader_parameter/screen_size = Vector2(2048, 1536)
 shader_parameter/force = 0.0
 shader_parameter/radius = 0.0
 shader_parameter/thickness = 0.0
@@ -51,26 +51,26 @@ length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ShockWave:material:shader_parameter/radius")
+tracks/0/path = NodePath("ShockWave:material:shader_parameter/force")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.6]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ShockWave:material:shader_parameter/force")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.4, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 0.08, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShockWave:material:shader_parameter/radius")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.6]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -222,7 +222,7 @@ script = ExtResource("4_nf8ix")
 environment = SubResource("Environment_j58db")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="World" index="1"]
-color = Color(1, 1, 0.996078, 1)
+color = Color(1, 1, 0.972549, 1)
 blend_mode = 1
 
 [node name="TextureRect" type="TextureRect" parent="World" index="2"]

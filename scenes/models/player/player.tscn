@@ -25,13 +25,13 @@ radius = 128.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_gif1i"]
 radius = 32.0
 
-[sub_resource type="Gradient" id="Gradient_q8uay"]
-offsets = PackedFloat32Array(0.412587, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
 [sub_resource type="Gradient" id="Gradient_gif1i"]
 offsets = PackedFloat32Array(0.487544, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_q8uay"]
+offsets = PackedFloat32Array(0.412587, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_mfhbk"]
 points = PackedVector2Array(800, 128, 896, 0, 800, -128, 0, -16, 0, 16)
@@ -126,6 +126,25 @@ position = Vector2(-17, -11)
 [node name="Shield4Marker2D4" type="Marker2D" parent="ShieldMarkers"]
 position = Vector2(-24, -4)
 
+[node name="HitParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 64
+texture = ExtResource("2_nu12e")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 8.0
+direction = Vector2(1, 1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 64.0
+initial_velocity_max = 196.0
+scale_amount_min = 0.08
+scale_amount_max = 0.16
+color_ramp = SubResource("Gradient_gif1i")
+
 [node name="ExplodeParticles" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 1024
@@ -149,25 +168,6 @@ tangential_accel_max = 50.0
 scale_amount_min = 0.05
 scale_amount_max = 0.2
 color_ramp = SubResource("Gradient_q8uay")
-
-[node name="HiiParticles" type="CPUParticles2D" parent="."]
-emitting = false
-amount = 64
-texture = ExtResource("2_nu12e")
-lifetime = 0.4
-one_shot = true
-explosiveness = 1.0
-randomness = 1.0
-emission_shape = 1
-emission_sphere_radius = 8.0
-direction = Vector2(1, 1)
-spread = 180.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 64.0
-initial_velocity_max = 196.0
-scale_amount_min = 0.08
-scale_amount_max = 0.16
-color_ramp = SubResource("Gradient_gif1i")
 
 [node name="BulletMarker2D" type="Marker2D" parent="."]
 position = Vector2(8, 0)

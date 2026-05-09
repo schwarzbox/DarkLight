@@ -54,7 +54,7 @@ func _process(delta: float) -> void:
 func start(pos: Vector2) -> void:
 	position = pos
 
-func hit(damage: int = 1) -> void:
+func hit(damage: int) -> void:
 	$Body.hit(damage)
 
 func is_dead() -> bool:

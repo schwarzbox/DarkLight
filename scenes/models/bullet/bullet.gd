@@ -8,7 +8,8 @@ signal died
 @export var type: Globals.Models = Globals.Models.BULLET
 
 var _force: float = 1024.0
-var _linear_velocity: Vector2 = Vector2.ZERO
+var _linear_velocity: Vector2 = Vector2.ZERO:
+	set = set_linear_velocity
 var _linear_acceleration: Vector2 = Vector2.ZERO
 
 var _blast_targets: Dictionary = {}
@@ -25,13 +26,14 @@ func _ready() -> void:
 
 	$Sprite2D.modulate = Globals.GLOW_COLORS.MIDDLE
 
+	$TrailParticles.emitting = false
+	$TrailParticles.lifetime = Globals.BULLET_TRAIL_LIFETIME
+	$TrailParticles.fixed_fps = Globals.FIXED_FPS
+
 	$ExplodeParticles.emitting = false
 	$ExplodeParticles.lifetime = Globals.BULLET_SCALE_DELAY
 	$ExplodeParticles.fixed_fps = Globals.FIXED_FPS
 	$ExplodeParticles.one_shot = true
-
-	$TrailParticles.emitting = false
-	$TrailParticles.fixed_fps = Globals.FIXED_FPS
 
 	# set blast radius
 	$BlastRadius/CollisionShape2D.shape.radius = Globals.BULLET_BLAST_RADIUS
@@ -60,7 +62,6 @@ func _process(delta: float) -> void:
 		$TrailParticles.emitting = false
 		$RadialLight.hide()
 	else:
-
 		$Sprite2D.modulate = Globals.GLOW_COLORS.HIGH
 		$TrailParticles.emitting = true
 		$RadialLight.show()
@@ -116,9 +117,7 @@ func start(
 ) -> void:
 	position = pos
 	rotation = dir
-	_force += strike_force
-
-	set_linear_velocity(Vector2(_force, 0).rotated(rotation))
+	set_linear_velocity(Vector2(_force + strike_force, 0).rotated(rotation))
 
 
 func hit(damage: int) -> void:
@@ -136,20 +135,20 @@ func apply_force(pos: Vector2, multiplier: float = 1.0) -> void:
 
 
 func _on_body_destroyed() -> void:
-	var _tween: Tween = create_tween()
+	var tween: Tween = create_tween()
 	$ExplodeParticles.emitting = true
-	_tween.tween_property(self, "scale", Vector2.ZERO, Globals.BULLET_SCALE_DELAY)
-	_tween.tween_callback(
+	tween.tween_property(self, "scale", Vector2.ZERO, Globals.BULLET_SCALE_DELAY)
+	tween.tween_callback(
 		func() -> void:
 			died.emit(self)
 			queue_free()
 	)
 
 func _on_body_self_destroyed() -> void:
-	var _tween: Tween = create_tween()
+	var tween: Tween = create_tween()
 	$ExplodeParticles.emitting = true
-	_tween.tween_property(self, "scale", Vector2.ZERO, Globals.BULLET_SCALE_DELAY)
-	_tween.tween_callback(func() -> void: queue_free())
+	tween.tween_property(self, "scale", Vector2.ZERO, Globals.BULLET_SCALE_DELAY)
+	tween.tween_callback(func() -> void: queue_free())
 
 
 func _on_blast_radius_body_entered(body: Enemy) -> void:
