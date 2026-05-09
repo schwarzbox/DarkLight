@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwb0sj3d6phw"]
+[gd_scene format=3 uid="uid://dwb0sj3d6phw"]
 
 [ext_resource type="Script" uid="uid://fbbsk3fi1m7a" path="res://scenes/models/trap/trap.gd" id="1_inj5o"]
 [ext_resource type="Shader" uid="uid://0by2qhbq3wtb" path="res://shaders/smoke.gdshader" id="2_gq8xo"]
@@ -13,15 +13,15 @@ shader = ExtResource("2_gq8xo")
 shader_parameter/noise_image = ExtResource("3_8ewxc")
 shader_parameter/speed = -0.4
 
-[node name="Trap" type="Area2D"]
+[node name="Trap" type="Area2D" unique_id=1421081459]
 collision_layer = 32
 monitorable = false
 script = ExtResource("1_inj5o")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=875358115]
 shape = SubResource("RectangleShape2D_q7qde")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1958126415]
 material = SubResource("ShaderMaterial_8ewxc")
 texture = ExtResource("2_yuwuk")
 

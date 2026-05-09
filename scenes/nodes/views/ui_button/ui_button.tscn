@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dy63hudg53cqc"]
+[gd_scene format=3 uid="uid://dy63hudg53cqc"]
 
 [ext_resource type="StyleBox" uid="uid://cgfraa2n3ued0" path="res://shared/button_styles/hover_style_box_flat.tres" id="1_h84ao"]
 [ext_resource type="StyleBox" uid="uid://bx6t66nmy5bj1" path="res://shared/button_styles/normal_style_box_flat.tres" id="1_lxfp1"]
@@ -9,7 +9,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sw83f"]
 
-[node name="UIButton" type="Button"]
+[node name="UIButton" type="Button" unique_id=409001582]
 offset_right = 78.0
 offset_bottom = 40.0
 mouse_default_cursor_shape = 2
@@ -23,7 +23,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_sw83f")
 text = "UI Button"
 script = ExtResource("2_lxfp1")
 
-[node name="ClickAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="ClickAudio" type="AudioStreamPlayer2D" parent="." unique_id=2020323541]
 stream = ExtResource("6_7dkwg")
 volume_db = -2.0
 

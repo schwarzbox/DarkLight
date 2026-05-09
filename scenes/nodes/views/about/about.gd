@@ -63,7 +63,6 @@ func _ready() -> void:
 	$VBoxContainer/Copyright.text = "\n".join(godot_copyright).format(
 		{"year": Time.get_date_dict_from_system().year}
 	)
-	print($VBoxContainer.size)
 
 func _on_godot_copyright_meta_clicked(meta: Variant) -> void:
 	OS.shell_open(str(meta))

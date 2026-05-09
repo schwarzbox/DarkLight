@@ -1,8 +1,7 @@
 extends View
 
-# fix volume
+# fix volume?
 # fix git pages
-# add dev log balance (light bullet, exit, hide from light, flock)
 
 var _game_view: View = null
 var _score_view: View = null
@@ -68,7 +67,8 @@ func _center_window_on_screen() -> void:
 
 	var window_size: Vector2i = window.get_size_with_decorations()
 	var display_size: Vector2i = DisplayServer.screen_get_size(display_id)
-	var window_position: Vector2i = (display_size / 2) - (window_size /2)
+
+	var window_position: Vector2i = (display_size * 0.5) - (window_size * 0.5)
 	window.position = window_position
 
 func _setup() -> void:

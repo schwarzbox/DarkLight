@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cd2l5khm4bbpi"]
+[gd_scene format=3 uid="uid://cd2l5khm4bbpi"]
 
 [ext_resource type="Script" uid="uid://c5xf63dlqlsdd" path="res://scenes/nodes/views/about/about.gd" id="1_h2rcg"]
 [ext_resource type="Texture2D" uid="uid://dw4gc8s1ej8e8" path="res://icon.png" id="1_pqior"]
@@ -15,6 +15,15 @@ subpixel_positioning = 0
 subpixel_positioning = 0
 msdf_pixel_range = 14
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
@@ -36,7 +45,7 @@ cache/0/28/0/underline_position = 0.0
 cache/0/28/0/underline_thickness = 0.0
 cache/0/28/0/scale = 1.0
 
-[node name="Window" type="Window"]
+[node name="Window" type="Window" unique_id=2027707188]
 oversampling_override = 1.0
 size = Vector2i(568, 448)
 unresizable = true
@@ -46,7 +55,7 @@ minimize_disabled = true
 maximize_disabled = true
 script = ExtResource("1_h2rcg")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1419163019]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -54,7 +63,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.18039216, 0.18039216, 0.20784314, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=964550512]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -65,12 +74,12 @@ size_flags_vertical = 3
 theme_override_constants/separation = 24
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer" unique_id=1962448208]
 layout_mode = 2
 texture = ExtResource("1_pqior")
 stretch_mode = 3
 
-[node name="Title" type="RichTextLabel" parent="VBoxContainer"]
+[node name="Title" type="RichTextLabel" parent="VBoxContainer" unique_id=1749838190]
 layout_mode = 2
 focus_mode = 2
 theme_override_colors/selection_color = Color(0.2784314, 0.38431373, 0.5294118, 1)
@@ -90,7 +99,7 @@ vertical_alignment = 1
 selection_enabled = true
 drag_and_drop_selection_enabled = false
 
-[node name="Version" type="RichTextLabel" parent="VBoxContainer"]
+[node name="Version" type="RichTextLabel" parent="VBoxContainer" unique_id=1799836112]
 layout_mode = 2
 focus_mode = 2
 theme_override_colors/selection_color = Color(0.2784314, 0.38431373, 0.5294118, 1)
@@ -108,7 +117,7 @@ vertical_alignment = 1
 selection_enabled = true
 drag_and_drop_selection_enabled = false
 
-[node name="Copyright" type="RichTextLabel" parent="VBoxContainer"]
+[node name="Copyright" type="RichTextLabel" parent="VBoxContainer" unique_id=1710154755]
 layout_mode = 2
 focus_mode = 2
 theme_override_colors/selection_color = Color(0.2784314, 0.38431373, 0.5294118, 1)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ny0cfyb1yyxm"]
+[gd_scene format=3 uid="uid://ny0cfyb1yyxm"]
 
 [ext_resource type="Script" uid="uid://tdag4wle0meb" path="res://scenes/models/bullet/bullet.gd" id="1_qrskq"]
 [ext_resource type="Texture2D" uid="uid://cf60tl7h3byby" path="res://scenes/models/bullet/bullet.png" id="2_y352c"]
@@ -31,34 +31,34 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 offsets = PackedFloat32Array(0.517483, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[node name="Bullet" type="AnimatableBody2D"]
+[node name="Bullet" type="AnimatableBody2D" unique_id=1469544924]
 collision_layer = 4
 collision_mask = 10
 script = ExtResource("1_qrskq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1776877585]
 shape = SubResource("CircleShape2D_bm6a3")
 
-[node name="BlastRadius" type="Area2D" parent="."]
+[node name="BlastRadius" type="Area2D" parent="." unique_id=10134120]
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BlastRadius"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlastRadius" unique_id=1630751107]
 shape = SubResource("CircleShape2D_vd5br")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=616017769]
 texture = ExtResource("2_y352c")
 
-[node name="Body" parent="." instance=ExtResource("3_vd5br")]
+[node name="Body" parent="." unique_id=1054999899 instance=ExtResource("3_vd5br")]
 
-[node name="RadialLight" parent="." instance=ExtResource("4_bjlov")]
+[node name="RadialLight" parent="." unique_id=539485110 instance=ExtResource("4_bjlov")]
 visible = false
 
-[node name="PointLight2D" parent="RadialLight" index="0"]
+[node name="PointLight2D" parent="RadialLight" index="0" unique_id=434379950]
 texture = SubResource("GradientTexture2D_clsqe")
 
-[node name="TrailParticles" type="CPUParticles2D" parent="."]
+[node name="TrailParticles" type="CPUParticles2D" parent="." unique_id=392949235]
 amount = 512
 texture = ExtResource("2_y352c")
 lifetime = 0.4
@@ -76,7 +76,7 @@ tangential_accel_max = 50.0
 scale_amount_min = 0.4
 color_ramp = SubResource("Gradient_vd5br")
 
-[node name="ExplodeParticles" type="CPUParticles2D" parent="."]
+[node name="ExplodeParticles" type="CPUParticles2D" parent="." unique_id=1725057188]
 emitting = false
 amount = 128
 texture = ExtResource("2_y352c")

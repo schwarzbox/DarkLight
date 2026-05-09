@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dkx1t6ghxrcb6"]
+[gd_scene format=3 uid="uid://dkx1t6ghxrcb6"]
 
 [ext_resource type="Script" uid="uid://ckmwfjm4i0led" path="res://scenes/models/exit/exit.gd" id="1_sauib"]
 [ext_resource type="Texture2D" uid="uid://0mglau3tlbek" path="res://scenes/models/exit/exit.png" id="2_cypc7"]
@@ -19,21 +19,21 @@ height = 256
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Exit" type="Area2D"]
+[node name="Exit" type="Area2D" unique_id=457453332]
 collision_layer = 0
 monitorable = false
 script = ExtResource("1_sauib")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=341850290]
 texture = ExtResource("2_cypc7")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1426031481]
 shape = SubResource("CircleShape2D_ooc88")
 
-[node name="RadialLight" parent="." instance=ExtResource("3_wioj3")]
+[node name="RadialLight" parent="." unique_id=414827666 instance=ExtResource("3_wioj3")]
 visible = false
 
-[node name="PointLight2D" parent="RadialLight" index="0"]
+[node name="PointLight2D" parent="RadialLight" index="0" unique_id=434379950]
 texture = SubResource("GradientTexture2D_275hm")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bqdg2idsev2if"]
+[gd_scene format=3 uid="uid://bqdg2idsev2if"]
 
 [ext_resource type="PackedScene" uid="uid://kn4un6yv7630" path="res://scenes/base/view/view.tscn" id="1_k01ea"]
 [ext_resource type="Script" uid="uid://dvx5k5folnqjc" path="res://scenes/views/game/labirinth/labirinth.gd" id="2_orhx3"]
@@ -130,10 +130,10 @@ _data = {
 &"RESET": SubResource("Animation_x8as3")
 }
 
-[node name="Labirinth" instance=ExtResource("1_k01ea")]
+[node name="Labirinth" unique_id=727075544 instance=ExtResource("1_k01ea")]
 script = ExtResource("2_orhx3")
 
-[node name="LevelContainer" type="CenterContainer" parent="CanvasLayer" index="0"]
+[node name="LevelContainer" type="CenterContainer" parent="CanvasLayer" parent_id_path=PackedInt32Array(2119416990) index="0" unique_id=1288318649]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -146,13 +146,13 @@ offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/LevelContainer" index="0"]
+[node name="Label" type="Label" parent="CanvasLayer/LevelContainer" index="0" unique_id=1599794265]
 layout_mode = 2
 label_settings = ExtResource("3_lcfbe")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PauseContainer" type="CenterContainer" parent="CanvasLayer" index="1"]
+[node name="PauseContainer" type="CenterContainer" parent="CanvasLayer" parent_id_path=PackedInt32Array(2119416990) index="1" unique_id=521838608]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -165,26 +165,26 @@ offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseContainer" index="0"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseContainer" index="0" unique_id=1296973924]
 layout_mode = 2
 theme_override_constants/separation = 42
 alignment = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/PauseContainer/VBoxContainer" index="0"]
+[node name="Label" type="Label" parent="CanvasLayer/PauseContainer/VBoxContainer" index="0" unique_id=1709778219]
 layout_mode = 2
 text = "PAUSE"
 label_settings = ExtResource("4_4xn1b")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Resume" parent="CanvasLayer/PauseContainer/VBoxContainer" index="1" instance=ExtResource("4_83xj8")]
+[node name="Resume" parent="CanvasLayer/PauseContainer/VBoxContainer" index="1" unique_id=1614496736 instance=ExtResource("4_83xj8")]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 text = ""
 icon = ExtResource("5_oqdqo")
 icon_alignment = 1
 
-[node name="Restart" parent="CanvasLayer/PauseContainer/VBoxContainer" index="2" instance=ExtResource("4_83xj8")]
+[node name="Restart" parent="CanvasLayer/PauseContainer/VBoxContainer" index="2" unique_id=296991487 instance=ExtResource("4_83xj8")]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 text = "
@@ -192,40 +192,40 @@ text = "
 icon = ExtResource("7_x8as3")
 icon_alignment = 1
 
-[node name="Back" parent="CanvasLayer/PauseContainer/VBoxContainer" index="3" instance=ExtResource("4_83xj8")]
+[node name="Back" parent="CanvasLayer/PauseContainer/VBoxContainer" index="3" unique_id=1360718243 instance=ExtResource("4_83xj8")]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 text = ""
 icon = ExtResource("6_cl31p")
 icon_alignment = 1
 
-[node name="GameOverContainer" type="CenterContainer" parent="CanvasLayer" index="2"]
+[node name="GameOverContainer" type="CenterContainer" parent="CanvasLayer" parent_id_path=PackedInt32Array(2119416990) index="2" unique_id=1575635666]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/GameOverContainer" index="0"]
+[node name="Label" type="Label" parent="CanvasLayer/GameOverContainer" index="0" unique_id=1652133211]
 layout_mode = 2
 text = "FOREVER LIGHT"
 label_settings = ExtResource("3_lcfbe")
 
-[node name="CursorLayer" type="CanvasLayer" parent="." index="1"]
+[node name="CursorLayer" type="CanvasLayer" parent="." index="1" unique_id=554072468]
 
-[node name="Cursor" parent="CursorLayer" index="0" instance=ExtResource("5_ghkli")]
+[node name="Cursor" parent="CursorLayer" index="0" unique_id=1859880554 instance=ExtResource("5_ghkli")]
 
-[node name="World" parent="." index="2"]
+[node name="World" parent="." index="2" unique_id=1713079177]
 script = ExtResource("4_nf8ix")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="World" index="0"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World" index="0" unique_id=1717496414]
 environment = SubResource("Environment_j58db")
 
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="World" index="1"]
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="World" index="1" unique_id=1246751466]
 color = Color(1, 1, 0.972549, 1)
 blend_mode = 1
 
-[node name="TextureRect" type="TextureRect" parent="World" index="2"]
+[node name="TextureRect" type="TextureRect" parent="World" index="2" unique_id=578201434]
 material = SubResource("ShaderMaterial_5y3gc")
 anchors_preset = 15
 anchor_right = 1.0
@@ -238,7 +238,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("NoiseTexture2D_vqj0m")
 
-[node name="ShockWave" type="ColorRect" parent="World" index="3"]
+[node name="ShockWave" type="ColorRect" parent="World" index="3" unique_id=864044782]
 material = SubResource("ShaderMaterial_x8as3")
 anchors_preset = 15
 anchor_right = 1.0
@@ -247,28 +247,26 @@ offset_bottom = 512.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="World" index="4"]
-libraries = {
-&"": SubResource("AnimationLibrary_c4anp")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="World" index="4" unique_id=734216466]
+libraries/ = SubResource("AnimationLibrary_c4anp")
 
-[node name="EnemyRegenearationTimer" type="Timer" parent="World" index="5"]
+[node name="EnemyRegenearationTimer" type="Timer" parent="World" index="5" unique_id=77913377]
 wait_time = 10.0
 
-[node name="Flock" type="Node2D" parent="World" index="6"]
+[node name="Flock" type="Node2D" parent="World" index="6" unique_id=2034844470]
 script = ExtResource("7_teq8j")
 
-[node name="Models" type="Node2D" parent="World" index="7"]
+[node name="Models" type="Node2D" parent="World" index="7" unique_id=1953455213]
 
-[node name="AudioStreamPlayer1" type="AudioStreamPlayer" parent="." index="3"]
+[node name="AudioStreamPlayer1" type="AudioStreamPlayer" parent="." index="3" unique_id=26097788]
 stream = ExtResource("5_8hcee")
 volume_db = -10.0
 
-[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." index="4"]
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." index="4" unique_id=224741112]
 stream = ExtResource("10_pugvo")
 volume_db = -8.0
 
-[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="." index="5"]
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="." index="5" unique_id=2030403759]
 stream = ExtResource("11_ri7mv")
 volume_db = -12.0
 

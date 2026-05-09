@@ -1,12 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://dnuagxvv0k48n"]
+[gd_scene format=3 uid="uid://dnuagxvv0k48n"]
 
 [ext_resource type="Script" uid="uid://dys1udfrs1enh" path="res://autoloads/transition.gd" id="1"]
 
-[node name="Transition" type="CanvasLayer"]
+[node name="Transition" type="CanvasLayer" unique_id=102979466]
 layer = 2
 script = ExtResource("1")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1677680140]
 modulate = Color(0, 0, 0, 0)
 anchors_preset = 15
 anchor_right = 1.0

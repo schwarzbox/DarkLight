@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ds53c785elheo"]
+[gd_scene format=3 uid="uid://ds53c785elheo"]
 
 [ext_resource type="Script" uid="uid://bgqmskxyhtuck" path="res://scenes/models/orb/orb.gd" id="1_8txy1"]
 [ext_resource type="Texture2D" uid="uid://d4h5klefs3c7f" path="res://scenes/models/orb/orb.png" id="2_dwlom"]
@@ -20,24 +20,24 @@ height = 128
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Orb" type="AnimatableBody2D"]
+[node name="Orb" type="AnimatableBody2D" unique_id=968341098]
 collision_layer = 16
 collision_mask = 8
 script = ExtResource("1_8txy1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633614068]
 shape = SubResource("CircleShape2D_qmx11")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=491457356]
 texture = ExtResource("2_dwlom")
 
-[node name="Body" parent="." instance=ExtResource("3_5l8ht")]
+[node name="Body" parent="." unique_id=1526415361 instance=ExtResource("3_5l8ht")]
 
-[node name="RadialLight" parent="." instance=ExtResource("3_rq7sp")]
+[node name="RadialLight" parent="." unique_id=572494141 instance=ExtResource("3_rq7sp")]
 
-[node name="PointLight2D" parent="RadialLight" index="0"]
+[node name="PointLight2D" parent="RadialLight" index="0" unique_id=434379950]
 texture = SubResource("GradientTexture2D_goolb")
 
-[node name="LifetimeTimer" type="Timer" parent="."]
+[node name="LifetimeTimer" type="Timer" parent="." unique_id=2064627492]
 
 [editable path="RadialLight"]
