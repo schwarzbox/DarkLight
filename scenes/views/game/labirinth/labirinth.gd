@@ -85,13 +85,14 @@ func _show_ui_container(key: String = "", alpha: float = 0.0) -> void:
 		ui_container.modulate.a = alpha
 
 func _init_view() -> void:
-	_audio_stream_player.volume_db = _audio_stream_player.volume_db - Globals.VOLUME_FADE_AMOUNT
+	_set_master_bus_volume_linear(0.0)
 	_audio_stream_player.play()
+
 	var tween: Tween = create_tween()
-	tween.tween_property(
-		_audio_stream_player,
-		"volume_db",
-		_audio_stream_player.volume_db + Globals.VOLUME_FADE_AMOUNT,
+	tween.tween_method(
+		_set_master_bus_volume_linear,
+		0.0,
+		1.0,
 		Globals.UI_DELAY
 	)
 
@@ -131,10 +132,10 @@ func _show_pause() -> void:
 	_kill_tween(_pause_tween)
 	_pause_tween = create_tween()
 	_pause_tween.tween_property($CanvasLayer/PauseContainer, "modulate:a", 1.0, Globals.UI_DELAY)
-	_pause_tween.parallel().tween_property(
-		_audio_stream_player,
-		"volume_db",
-		_audio_stream_player.volume_db - Globals.VOLUME_FADE_AMOUNT,
+	_pause_tween.parallel().tween_method(
+		_set_master_bus_volume_linear,
+		1.0,
+		0.0,
 		Globals.UI_DELAY
 	)
 	_pause_tween.tween_callback(func() -> void: _audio_stream_player.stream_paused = true)
@@ -150,10 +151,10 @@ func _hide_pause() -> void:
 	_kill_tween(_pause_tween)
 	_pause_tween = create_tween()
 	_pause_tween.tween_property($CanvasLayer/PauseContainer, "modulate:a", 0.0, Globals.UI_DELAY)
-	_pause_tween.parallel().tween_property(
-		_audio_stream_player,
-		"volume_db",
-		_audio_stream_player.volume_db + Globals.VOLUME_FADE_AMOUNT,
+	_pause_tween.parallel().tween_method(
+		_set_master_bus_volume_linear,
+		0.0,
+		1.0,
 		Globals.UI_DELAY
 	)
 	_pause_tween.tween_callback(
@@ -171,10 +172,10 @@ func _show_game_over(text: String, callable: Callable) -> void:
 	_kill_tween(_game_over_tween)
 	_game_over_tween = create_tween()
 	_game_over_tween.tween_property($CanvasLayer/GameOverContainer, "modulate:a", 1.0, Globals.UI_DELAY)
-	_game_over_tween.parallel().tween_property(
-		_audio_stream_player,
-		"volume_db",
-		_audio_stream_player.volume_db - Globals.VOLUME_FADE_AMOUNT,
+	_game_over_tween.parallel().tween_method(
+		_set_master_bus_volume_linear,
+		1.0,
+		0.0,
 		Globals.UI_DELAY
 	)
 	_game_over_tween.tween_callback(func() -> void: _set_transition(callable, self))
@@ -200,6 +201,10 @@ func _exit(view: View) -> void:
 func _kill_tween(tween: Tween) -> void:
 	if tween:
 		tween.kill()
+
+func _set_master_bus_volume_linear(value: float) -> void:
+	AudioServer.set_bus_volume_linear(0, value)
+
 
 func _on_player_cursor_hided() -> void:
 	$CursorLayer/Cursor.hide_all()

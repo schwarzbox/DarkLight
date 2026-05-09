@@ -1,8 +1,5 @@
 extends View
 
-# fix volume?
-# fix git pages
-
 var _game_view: View = null
 var _score_view: View = null
 
@@ -22,7 +19,7 @@ func _ready() -> void:
 		$CanvasLayer/MainContainer/VBoxContainer/VBoxContainer/Score.hide()
 
 	# play intro
-	$AudioStreamPlayer.volume_db = $AudioStreamPlayer.volume_db - Globals.VOLUME_FADE_AMOUNT
+	_set_master_bus_volume_linear(0.0)
 	$AudioStreamPlayer.play()
 	_on_main_audio_resumed()
 
@@ -107,15 +104,19 @@ func _on_view_exited(view: View) -> void:
 	view.queue_free()
 	_set_transition(_setup)
 
+
 func _on_main_audio_paused() -> void:
 	if _audio_tween:
 		_audio_tween.kill()
 	_audio_tween = create_tween()
-	_audio_tween.tween_property(
-		$AudioStreamPlayer,
-		"volume_db",
-		$AudioStreamPlayer.volume_db - Globals.VOLUME_FADE_AMOUNT,
-		Globals.UI_DELAY
+	(
+		_audio_tween
+		. tween_method(
+			_set_master_bus_volume_linear,
+			1.0,
+			0.0,
+			Globals.UI_DELAY
+		)
 	)
 	_audio_tween.tween_callback(func() -> void: $AudioStreamPlayer.stream_paused = true)
 
@@ -124,12 +125,19 @@ func _on_main_audio_resumed() -> void:
 	if _audio_tween:
 		_audio_tween.kill()
 	_audio_tween = create_tween()
-	_audio_tween.tween_property(
-		$AudioStreamPlayer,
-		"volume_db",
-		$AudioStreamPlayer.volume_db + Globals.VOLUME_FADE_AMOUNT,
-		Globals.UI_DELAY
+	(
+		_audio_tween
+		. tween_method(
+			_set_master_bus_volume_linear,
+			0.0,
+			1.0,
+			Globals.UI_DELAY
+		)
 	)
+
+func _set_master_bus_volume_linear(value: float) -> void:
+	AudioServer.set_bus_volume_linear(0, value)
+
 
 func _on_game_pressed() -> void:
 	_set_transition(_start, _game_view)

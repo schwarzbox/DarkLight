@@ -18,9 +18,13 @@ run/max_fps=60
 boot_splash/show_image=false
 config/icon="res://icon.png"
 
+[audio]
+
+buses/default_bus_layout=""
+
 [autoload]
 
-Transition="*res://autoloads/transition.tscn"
+Transition="*res://autoloads/transition/transition.tscn"
 Globals="*res://autoloads/globals.gd"
 
 [debug]

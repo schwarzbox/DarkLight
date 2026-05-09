@@ -37,7 +37,6 @@ func fade(
 		. set_ease(Tween.EASE_IN_OUT)
 	)
 
-
 func _execute() -> void:
 	if _callable:
 		if _view:

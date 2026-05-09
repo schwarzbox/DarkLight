@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dnuagxvv0k48n"]
 
-[ext_resource type="Script" uid="uid://dys1udfrs1enh" path="res://autoloads/transition.gd" id="1"]
+[ext_resource type="Script" uid="uid://dys1udfrs1enh" path="res://autoloads/transition/transition.gd" id="1"]
 
 [node name="Transition" type="CanvasLayer" unique_id=102979466]
 layer = 2

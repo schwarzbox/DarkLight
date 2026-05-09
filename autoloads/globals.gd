@@ -4,7 +4,6 @@ func _ready() -> void:
 	prints(name, "ready")
 
 const UI_DELAY: float = 1.0
-const VOLUME_FADE_AMOUNT: int = 20
 
 const CURSOR_ARROW_ICON: Texture2D = preload("res://shared/icons/cursor_arrow_icon.png")
 const CURSOR_POINTING_HAND_ICON: Texture2D = preload("res://shared/icons/cursor_pointing_hand_icon.png")
